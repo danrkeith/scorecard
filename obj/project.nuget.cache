@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N8hK+zUuPM6HnHS3Aws6RM9tz24s5VY4BHiK/Nk6qJllCfRq8RoiXsS7OeLKnv3OxtJmGATWGbUJbQKeN0NTgA==",
+  "dgSpecHash": "gm1X6WeR6i7W2QNIhteDt44XP3t6AlA4CTJs9tQMTmIxDygt1kvEmznUzSLaF6wPYbcxFuiQEclVRPT5razYhA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\ScoreCardv2.csproj",
+  "projectFilePath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\ScoreCardv2.csproj": {}
+    "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\ScoreCardv2.csproj": {
+    "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\ScoreCardv2.csproj",
+        "projectUniqueName": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj",
         "projectName": "ScoreCardv2",
-        "projectPath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\ScoreCardv2.csproj",
+        "projectPath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj",
         "packagesPath": "C:\\Users\\danrk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCardv2\\obj\\",
+        "outputPath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
