@@ -40,7 +40,6 @@ C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcore
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.TagHelpers.output.cache
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.RazorCoreGenerate.cache
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
