@@ -52,3 +52,6 @@ C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcore
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.dll
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.pdb
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.genruntimeconfig.cache
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Index.cshtml.g.cs
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Login.cshtml.g.cs
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Register.cshtml.g.cs
