@@ -47,6 +47,10 @@
             "Microsoft.Data.Sqlite": {
               "target": "Package",
               "version": "[5.0.8, )"
+            },
+            "Microsoft.Data.Sqlite.Core": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             }
           },
           "imports": [

@@ -266,7 +266,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Microsoft.Data.Sqlite >= 5.0.8"
+      "Microsoft.Data.Sqlite >= 5.0.8",
+      "Microsoft.Data.Sqlite.Core >= 5.0.8"
     ]
   },
   "packageFolders": {
@@ -314,6 +315,10 @@
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.Data.Sqlite": {
+            "target": "Package",
+            "version": "[5.0.8, )"
+          },
+          "Microsoft.Data.Sqlite.Core": {
             "target": "Package",
             "version": "[5.0.8, )"
           }
