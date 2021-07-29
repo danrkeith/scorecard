@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScoreCardv2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace ScoreCardv2.Controllers
 
         [Route("/User/Register/")]
         [HttpPost]
-        public IActionResult PostRegister()
+        public IActionResult PostRegister(UserViewModel model)
         {
-            return Redirect("/User/Register/");
+            return Register();
         }
     }
 }

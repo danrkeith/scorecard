@@ -27,6 +27,7 @@
         </nav>
     </header>
     <div class="container">
+        @RenderSection("Warning", required: false)
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
