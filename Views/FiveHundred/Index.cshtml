@@ -10,25 +10,57 @@
 }
 
 <form>
+    <!--Adaptive grid of names-->
     <div class="container">
-        <div class="row my-1">
-            <div class="col">Team 1</div>
-            <div class="col">Team 2</div>
+        <div class="row mb-1">
+            <div class="col-6">Team 1</div>
+            <div class="col-6">Team 2</div>
         </div>
-        <div class="row my-1">
-            <div class="col">
+        <div class="row mb-1">
+            <div class="col-6">
                 <input type="text" class="form-control" placeholder="Player 1" />
             </div>
-            <div class="col">
+            <div class="col-6">
                 <input type="text" class="form-control" placeholder="Player 1" />
             </div>
         </div>
-        <div class="row my-1">
-            <div class="col">
+        <div class="row mb-1">
+            <div class="col-6">
                 <input type="text" class="form-control" placeholder="Player 2" />
             </div>
-            <div class="col">
+            <div class="col-6">
                 <input type="text" class="form-control" placeholder="Player 2" />
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <!--Options for size of teams & players/team-->
+    <div class="container">
+        <div class="row justify-content-between mb-1">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Teams</span>
+                    </div>
+                    <select class="custom-select">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Players Per Team</span>
+                    </div>
+                    <select class="custom-select">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <input type="submit" class="form-control btn btn-primary" value="Create Game" />
             </div>
         </div>
     </div>
