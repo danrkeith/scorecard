@@ -25,7 +25,7 @@
             // Alert user if passwords don't match
             $('#warning').html(match ? '' : 'Passwords do not match');
 
-            // Allow user to proceed if each field is filled
+            // Allow user to proceed if requirements are met
             $('#submit').prop('disabled', !(filled && match));
         });
     </script>
@@ -49,13 +49,3 @@
         <input id="submit" type="submit" class="btn btn-primary" value="Register" disabled />
     </div>
 </form>
-
-@section Warning
-{
-    @if (ViewBag.Warning != null)
-    {
-        <div class="alert alert-warning">
-            @ViewBag.Warning
-        </div>
-    }
-}

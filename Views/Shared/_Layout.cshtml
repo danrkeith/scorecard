@@ -27,7 +27,12 @@
         </nav>
     </header>
     <div class="container">
-        @RenderSection("Warning", required: false)
+        @if (ViewBag.Warning != null)
+        {
+            <div class="alert alert-warning">
+                @ViewBag.Warning
+            </div>
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

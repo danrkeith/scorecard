@@ -3,7 +3,7 @@
 #### Description:
 
 #### References:
-* DotNet
+* DOTNET (ASP.NET, SQLite.Net)
    * https://docs.microsoft.com/en-us/documentation/
 * JQuery
    * https://www.w3schools.com/jquery/
