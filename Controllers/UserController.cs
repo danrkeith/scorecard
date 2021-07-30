@@ -2,10 +2,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using ScoreCardv2.Models;
+using SQLitePCL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
@@ -27,15 +25,62 @@ namespace ScoreCardv2.Controllers
         }
 
         [Route("/User/Login/")]
-        public IActionResult Login()
+        public IActionResult Login(string warning = null)
         {
+            ViewBag.Warning = warning;
             return View("/Views/User/Login.cshtml");
+        }
+
+        [Route("User/Login/")]
+        [HttpPost]
+        public IActionResult PostLogin(UserViewModel model)
+        {
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                // Find user's id with corresponding username and hash
+                com = SQLite.Command(
+                    con,
+                    @"
+                        SELECT id
+                        FROM users
+                        WHERE username = $u
+                        AND hash = $h
+                        LIMIT 1
+                    ",
+                    ("$u", model.Username),
+                    ("$h", Encryption.EncryptString(
+                        _iConfig.GetValue<string>("EncryptionKey"),
+                        model.Password)));
+
+                using (SqliteDataReader reader = com.ExecuteReader())
+                {
+                    // If credentials don't match, alert user
+                    if (!reader.HasRows)
+                    {
+                        return RedirectToAction("Login", "User", new { warning = "Invalid username and/or password" });
+                    }
+
+                    reader.Read();
+
+                    // Store user id in session
+                    HttpContext.Session.Set("id", BitConverter.GetBytes(reader.GetInt32(0)));
+                }
+            }
+
+            // Return to home page
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("/User/Register/")]
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(string warning = null)
         {
+            ViewBag.Warning = warning;
             return View("/Views/User/Register.cshtml");
         }
 
@@ -43,10 +88,10 @@ namespace ScoreCardv2.Controllers
         [HttpPost]
         public IActionResult PostRegister(UserViewModel model)
         {
-            // Open connection with SQLite database
+            // Open connection with database
             using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
             {
-                SQLitePCL.Batteries.Init();
+                Batteries.Init();
                 con.Open();
                 SqliteCommand com;
 
@@ -68,50 +113,27 @@ namespace ScoreCardv2.Controllers
 
                     if (reader.GetInt32(0) == 1)
                     {
-                        ViewBag.Warning = "Username Taken";
-                        return Register();
+                        return RedirectToAction("Register", "User", new { warning = "Username taken" });
                     }
                 }
 
-                // Insert user into database, encrypting password and returning id
-                using (SqliteTransaction transaction = con.BeginTransaction())
-                {
-                    // Insert into database
-                    com = SQLite.Command(
-                        con,
-                        @"
-                            INSERT INTO users (username, hash)
-                            VALUES ($u, $h)
-                        ",
-                        ("$u", model.Username),
-                        ("$h", Encryption.EncryptString(
-                            _iConfig.GetValue<string>("EncryptionKey"),
-                            model.Password)));
+                // Insert into database
+                com = SQLite.Command(
+                    con,
+                    @"
+                        INSERT INTO users (username, hash)
+                        VALUES ($u, $h)
+                    ",
+                    ("$u", model.Username),
+                    ("$h", Encryption.EncryptString(
+                        _iConfig.GetValue<string>("EncryptionKey"),
+                        model.Password)));
 
-                    com.ExecuteNonQuery();
-
-                    // Get last inserted user
-                    com = SQLite.Command(
-                        con,
-                        @"
-                            SELECT MAX(id)
-                            FROM users
-                        ");
-
-                    using (SqliteDataReader reader = com.ExecuteReader())
-                    {
-                        reader.Read();
-
-                        // Store user id in session
-                        HttpContext.Session.Set("id", BitConverter.GetBytes(reader.GetInt32(0)));
-                    }
-
-                    transaction.Commit();
-                }
+                com.ExecuteNonQuery();
             }
 
-            // Return to home page
-            return Redirect("/");
+            // Log user in
+            return RedirectToAction("PostLogin", "User", model);
         }
     }
 }
