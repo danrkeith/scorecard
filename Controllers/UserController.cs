@@ -19,19 +19,21 @@ namespace ScoreCardv2.Controllers
         }
 
         [Route("/User/")]
+        [HttpGet]
         public IActionResult Index()
         {
             return View("/Views/User/Index.cshtml");
         }
 
         [Route("/User/Login/")]
+        [HttpGet]
         public IActionResult Login(string warning = null)
         {
             ViewBag.Warning = warning;
             return View("/Views/User/Login.cshtml");
         }
 
-        [Route("User/Login/")]
+        [Route("/User/Login/")]
         [HttpPost]
         public IActionResult PostLogin(UserViewModel model)
         {
@@ -73,6 +75,14 @@ namespace ScoreCardv2.Controllers
             }
 
             // Return to home page
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Route("/User/Logout/")]
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("id");
             return RedirectToAction("Index", "Home");
         }
 

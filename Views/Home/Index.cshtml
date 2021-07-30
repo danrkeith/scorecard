@@ -3,5 +3,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    @if (Context.Session.TryGetValue("id", out byte[] id))
+    {
+        <h1 class="display-4">Welcome, User @BitConverter.ToInt32(id)</h1>
+    }
+    else
+    { 
+        <h1 class="display-4">Welcome</h1>
+    }
 </div>
