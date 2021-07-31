@@ -143,7 +143,7 @@ namespace ScoreCardv2.Controllers
             }
 
             // Log user in
-            return RedirectToAction("PostLogin", "User", model);
+            return PostLogin(model);
         }
     }
 }
