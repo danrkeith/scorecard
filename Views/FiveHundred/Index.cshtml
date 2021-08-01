@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TeamsViewModel 
+@{
     ViewData["Title"] = "500";
 }
 
@@ -7,6 +8,8 @@
     <script>
         // Change amount of teams
         $("#teams").change(function () {
+            $("#teamCount").val($(this).val());
+
             for (let i = 1; i <= 3; i++) {
                 if (i > $(this).val()) {
                     $(`.team${i}`).hide();
@@ -18,6 +21,8 @@
 
         // Change amount of players
         $("#players").change(function () {
+            $("#playerCount").val($(this).val());
+
             for (let i = 1; i <= 3; i++) {
                 if (i > $(this).val()) {
                     $(`#player${i}`).hide();
@@ -29,8 +34,13 @@
     </script>
 }
 
-<form>
+<form asp-controller="FiveHundred" asp-action="Index" method="post" autocomplete="off">
+    <!--Hidden values for model-->
+    <input asp-for="TeamCount" id="teamCount" type="number" value="2" style="display: none" />
+    <input asp-for="PlayerCount" id="playerCount" type="number" value="2" style="display: none" />
+
     <!--Adaptive grid of names-->
+    <!--Team 3 & Player 3 are disabled by default-->
     <div class="container">
         <div id="teamNames" class="row mb-1">
             <div class="col team1">Team 1</div>
@@ -39,35 +49,35 @@
         </div>
         <div id="player1" class="row mb-1">
             <div class="col team1">
-                <input type="text" class="form-control" placeholder="Player 1" />
+                <input asp-for="Names[0][0]" type="text" class="form-control" placeholder="Player 1" />
             </div>
             <div class="col team2">
-                <input type="text" class="form-control" placeholder="Player 1" />
+                <input asp-for="Names[1][0]" type="text" class="form-control" placeholder="Player 1" />
             </div>
             <div class="col team3" style="display: none">
-                <input type="text" class="form-control" placeholder="Player 1" />
+                <input asp-for="Names[2][0]" type="text" class="form-control" placeholder="Player 1" />
             </div>
         </div>
         <div id="player2" class="row mb-1">
             <div class="col team1">
-                <input type="text" class="form-control" placeholder="Player 2" />
+                <input asp-for="Names[0][1]" type="text" class="form-control" placeholder="Player 2" />
             </div>
             <div class="col team2">
-                <input type="text" class="form-control" placeholder="Player 2" />
+                <input asp-for="Names[1][1]" type="text" class="form-control" placeholder="Player 2" />
             </div>
             <div class="col team3" style="display: none">
-                <input type="text" class="form-control" placeholder="Player 2" />
+                <input asp-for="Names[2][1]" type="text" class="form-control" placeholder="Player 2" />
             </div>
         </div>
         <div id="player3" class="row mb-1" style="display: none">
             <div class="col team1">
-                <input type="text" class="form-control" placeholder="Player 3" />
+                <input asp-for="Names[0][2]" type="text" class="form-control" placeholder="Player 3" />
             </div>
             <div class="col team2">
-                <input type="text" class="form-control" placeholder="Player 3" />
+                <input asp-for="Names[1][2]" type="text" class="form-control" placeholder="Player 3" />
             </div>
             <div class="col team3" style="display: none">
-                <input type="text" class="form-control" placeholder="Player 3" />
+                <input asp-for="Names[2][2]" type="text" class="form-control" placeholder="Player 3" />
             </div>
         </div>
     </div>
