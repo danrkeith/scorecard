@@ -87,17 +87,40 @@ namespace ScoreCardv2.Controllers
                     "team_id",
                     Array.ConvertAll(teamIDs, Convert.ToString));
 
-                // Create game, leaving user as null if no user is logged in
-                com = SQLite.Command(
-                    con,
-                    $@"
-                        INSERT INTO fiveHundred_games (user_id, teamGame_id)
-                        VALUES ($u, $t)
-                    ",
-                    ("$u", HttpContext.Session.TryGetValue("id", out byte[] id) ? BitConverter.ToInt32(id) : (int?)null),
-                    ("$t", teamGame));
+                // Start transaction to ensure that the max id is the last game inserted
+                using (SqliteTransaction transaction = con.BeginTransaction())
+                {
+                    // Create game, leaving user as null if no user is logged in
+                    com = SQLite.Command(
+                        con,
+                        $@"
+                            INSERT INTO fiveHundred_games (user_id, teamGame_id)
+                            VALUES ($u, $t)
+                        ",
+                        ("$u", HttpContext.Session.TryGetValue("id", out byte[] id) ? BitConverter.ToInt32(id) : (int?)null),
+                        ("$t", teamGame));
 
-                com.ExecuteNonQuery();
+                    com.ExecuteNonQuery();
+
+                    // Get id of game just inserted
+                    com = SQLite.Command(
+                        con,
+                        @"
+                            SELECT MAX (id)
+                            FROM fiveHundred_games
+                        ");
+
+                    using (SqliteDataReader reader = com.ExecuteReader())
+                    {
+                        reader.Read();
+
+                        // Save id of game for session
+                        HttpContext.Session.Set("game", BitConverter.GetBytes(reader.GetInt32(0)));
+                    }
+
+                    // Commit transaction
+                    transaction.Commit();
+                }
             }
         }
     }

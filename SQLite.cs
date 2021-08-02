@@ -113,34 +113,41 @@ namespace ScoreCardv2
             // Create new team if none already exists
             if (id == 0)
             {
-                com = SQLite.Command(
+                // Start transaction to avoid insertions of other values with 1 higher than max id
+                using (SqliteTransaction transaction = con.BeginTransaction())
+                {
+                    com = SQLite.Command(
                     con,
                     $@"
                         SELECT MAX(id)
                         FROM {table}
                     ");
 
-                using (SqliteDataReader reader = com.ExecuteReader())
-                {
-                    reader.Read();
+                    using (SqliteDataReader reader = com.ExecuteReader())
+                    {
+                        reader.Read();
 
-                    // If no other teams exist, id should be 1, otherwise 1 higher than max
-                    id = reader.IsDBNull(0) ? 1 : reader.GetInt32(0) + 1;
-                }
+                        // If no other teams exist, id should be 1, otherwise 1 higher than max
+                        id = reader.IsDBNull(0) ? 1 : reader.GetInt32(0) + 1;
+                    }
 
-                // Insert each person with the correct team id into teams
-                foreach (string element in elements)
-                {
-                    com = Command(
-                        con,
-                        $@"
-                            INSERT INTO {table} (id, {subject})
-                            VALUES ($id, $e)
-                        ",
-                        ("$id", id),
-                        ("$e", element));
+                    // Insert each person with the correct team id into teams
+                    foreach (string element in elements)
+                    {
+                        com = Command(
+                            con,
+                            $@"
+                                INSERT INTO {table} (id, {subject})
+                                VALUES ($id, $e)
+                            ",
+                            ("$id", id),
+                            ("$e", element));
 
-                    com.ExecuteNonQuery();
+                        com.ExecuteNonQuery();
+                    }
+
+                    // Commit transaction
+                    transaction.Commit();
                 }
             }
 
