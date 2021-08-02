@@ -1,18 +1,20 @@
 ﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
 namespace ScoreCardv2
 {
     public static class SQLite
     {
-        public static SqliteCommand Command(SqliteConnection con, string query, params (string key, object value)[] parameters)
+        public static SqliteCommand Command(SqliteConnection con, string query, params (string key, object? value)[] parameters)
         {
             SqliteCommand com = con.CreateCommand();
             com.CommandText = query;
             for (int i = 0; i < parameters.Length; i++)
             {
-                com.Parameters.AddWithValue(parameters[i].key, parameters[i].value);
+                com.Parameters.AddWithValue(parameters[i].key, parameters[i].value ?? DBNull.Value);
             }
             return com;
         }
@@ -62,7 +64,7 @@ namespace ScoreCardv2
 
                 com.CommandText = $@"
                     SELECT id
-                    FROM teams
+                    FROM {table}
                     WHERE id IN ({string.Join(", ", parameters)})
                     AND {subject} = $e
                 ";
@@ -142,7 +144,7 @@ namespace ScoreCardv2
                 }
             }
 
-            return (int)id;
+            return id;
         }
     }
 }

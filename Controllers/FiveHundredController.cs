@@ -80,8 +80,24 @@ namespace ScoreCardv2.Controllers
                         Array.ConvertAll(ids, Convert.ToString));
                 }
 
-                // Create teamGame, pointing to each team involved in the game.
-                ;
+                // Create teamGame, pointing to each team involved in the game
+                int teamGame = SQLite.CreateStructure(
+                    con,
+                    "teamGames",
+                    "team_id",
+                    Array.ConvertAll(teamIDs, Convert.ToString));
+
+                // Create game, leaving user as null if no user is logged in
+                com = SQLite.Command(
+                    con,
+                    $@"
+                        INSERT INTO fiveHundred_games (user_id, teamGame_id)
+                        VALUES ($u, $t)
+                    ",
+                    ("$u", HttpContext.Session.TryGetValue("id", out byte[] id) ? BitConverter.ToInt32(id) : (int?)null),
+                    ("$t", teamGame));
+
+                com.ExecuteNonQuery();
             }
         }
     }
