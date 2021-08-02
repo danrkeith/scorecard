@@ -74,6 +74,9 @@ namespace ScoreCardv2.Controllers
                 }
             }
 
+            // Remove current game as active game
+            HttpContext.Session.Remove("game");
+
             // Return to home page
             return RedirectToAction("Index", "Home");
         }
