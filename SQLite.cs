@@ -24,7 +24,7 @@ namespace ScoreCardv2
             // Create structure if one doesn't already exist with all elements contained
 
             // Find structures with subjects equal to elements, without excess subjects
-            List<int> validStructures;
+            List<int> validStructures = new List<int>();
 
             // Start with all structures
             SqliteCommand com = Command(
@@ -36,8 +36,6 @@ namespace ScoreCardv2
 
             using (SqliteDataReader reader = com.ExecuteReader())
             {
-                validStructures = new List<int>();
-
                 while (reader.Read())
                 {
                     validStructures.Add(reader.GetInt32(0));

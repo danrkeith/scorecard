@@ -20,7 +20,7 @@ namespace ScoreCardv2.Controllers
 
         [Route("/FiveHundred/")]
         [HttpPost]
-        public void PostIndex(TeamsViewModel model)
+        public IActionResult PostIndex(TeamsViewModel model)
         {
             // Open connection with database
             using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
@@ -122,6 +122,84 @@ namespace ScoreCardv2.Controllers
                     transaction.Commit();
                 }
             }
+
+            return RedirectToAction("Game", "FiveHundred");
+        }
+
+        [Route("/FiveHundred/Game/")]
+        [HttpGet]
+        public IActionResult Game()
+        {
+            if (!HttpContext.Session.TryGetValue("game", out byte[] game))
+            {
+                throw new InvalidOperationException("Game does not exist in HttpContext.Session");
+            }
+
+            // Create game data in model
+            GameViewModel model = new GameViewModel();
+
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                // Get names of team members
+                com = SQLite.Command(
+                    con,
+                    @"
+                        SELECT t.id, p.name
+                        FROM people p 
+                        INNER JOIN (
+                            SELECT *
+                            FROM teams
+                            WHERE id IN (
+                                SELECT team_id
+                                FROM teamGames
+                                WHERE id IN (
+                                    SELECT teamGame_id
+                                    FROM fiveHundred_games
+                                    WHERE id = $id
+                                )
+                            )
+                        ) t ON p.id = t.person_id
+                    ",
+                    ("$id", BitConverter.ToInt32(game)));
+
+                // Insert names into teams
+                Dictionary<int, List<string>> teams = new Dictionary<int, List<string>>();
+
+                using (SqliteDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0) - 1;
+
+                        // Create team if it doesn't exist
+                        if (!teams.ContainsKey(id))
+                        {
+                            teams.Add(id, new List<string>());
+                        }
+
+                        teams[id].Add(reader.GetString(1));
+                    }
+                }
+
+                // Move teams to models
+                model.Teams = new GameViewModel.Team[teams.Count()];
+                for (int i = 0; i < teams.Count(); i++)
+                {
+                    model.Teams[i].Members = new string[teams.First().Value.Count()];
+
+                    for (int j = 0; j < teams.First().Value.Count(); j++)
+                    {
+                        model.Teams[i].Members[j] = teams.ElementAt(i).Value[j];
+                    }
+                }
+            }
+
+            return View("/Views/FiveHundred/Game.cshtml", model);
         }
     }
 }
