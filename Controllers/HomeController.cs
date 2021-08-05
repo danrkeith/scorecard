@@ -15,7 +15,10 @@ namespace ScoreCardv2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View("/Views/Home/Index.cshtml");
+            //return View("/Views/Home/Index.cshtml");
+
+            HttpContext.Session.Set("game", BitConverter.GetBytes(1));
+            return RedirectToAction("Game", "FiveHundred");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

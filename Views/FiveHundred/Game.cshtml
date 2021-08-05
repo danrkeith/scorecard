@@ -6,62 +6,108 @@
 @section Scripts
 {
     <script>
+        // On bidder change
+        $('.input-group input[type=radio][name=bidder]').change(function () {
+            // Set all hands to defender
+            $('.biddingTricks, .suit').hide();
+            $('.defendingTricks').show();
 
+            // Change bidder
+            let id = $(this).val();
+            $(`#biddingTricks${id}, #suit${id}`).show();
+            $(`#defendingTricks${id}`).hide();
+        })
     </script>
 }
 
-<!--Table for displaying all hands played-->
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th scope="col" class="">#</th>
+<div class="container">
+    <!--Table for displaying all hands played-->
+    <div class="row mb-3">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="">#</th>
+                        @for (int t = 0; t < Model.Teams.Length; t++)
+                        {
+                            <th scope="col">@Model.Teams[t].Name</th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!--Show 0-hands if no hands currently exist-->
+                    @if (Model.Teams[0].Rounds == null)
+                    {
+                        <tr>
+                            <th>0</th>
+                            @for (int t = 0; t < Model.Teams.Length; t++)
+                            {
+                                <td>0</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--Select bidder-->
+    <div class="row mb-1">
+        <div class="col">
+            <span class="font-weight-light">Select Bidder</span>
+        </div>
+    </div>
+
+    <!--Input for new hand per team-->
+    <form autocomplete="off">
+        <div class="row mb-3">
             @for (int t = 0; t < Model.Teams.Length; t++)
             {
-                <th scope="col">@Model.Teams[t].Name</th>
+                <div class="col input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="radio" name="bidder" value="@(t)" />
+                        </div>
+                        <span class="input-group-text">@Model.Teams[t].Name</span>
+                    </div>
+                    <select id="defendingTricks@(t)" class="custom-select defendingTricks">
+                        <option selected>Tricks Scored...</option>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select>
+                    <select id="biddingTricks@(t)" class="custom-select biddingTricks" style="display: none">
+                        <option selected>Tricks Bid...</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select>
+                    <select id="suit@(t)" class="custom-select suit" style="display: none">
+                        <option selected>Suit...</option>
+                        <option>Spades</option>
+                        <option>Clubs</option>
+                        <option>Diamonds</option>
+                        <option>Hearts</option>
+                        <option>No Trumps</option>
+                    </select>
+                </div>
             }
-        </tr>
-    </thead>
-</table>
-
-<br />
-
-<!--Input for new hand per team-->
-@for (int t = 0; t < Model.Teams.Length; t++)
-{
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">@Model.Teams[t].Name</span>
-            <button class="btn btn-outline-secondary" type="button">Bidder</button>
         </div>
-        <select id="defendingTricks@(t)" class="custom-select">
-            <option selected>Tricks Scored...</option>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-        </select>
-        <select id="biddingTricks@(t)" class="custom-select" style="display: none">
-            <option selected>Tricks Bid...</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-        </select>
-        <select id="suit@(t)" class="custom-select" style="display: none">
-            <option selected>Suit...</option>
-            <option>Spades</option>
-            <option>Clubs</option>
-            <option>Diamonds</option>
-            <option>Hearts</option>
-            <option>No Trumps</option>
-        </select>
-    </div>
-}
+        <div class="row mb-1">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Create Hand" />
+            </div>
+        </div>
+    </form>
+</div>
