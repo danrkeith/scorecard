@@ -12,7 +12,7 @@ namespace ScoreCardv2.Models
         {
             public string[] Members { get; set; }
             public int[] Rounds { get; set; }
-
+            
             public string Name => string.Join(", ", Members);
             public int Score => Rounds.Sum();
         }

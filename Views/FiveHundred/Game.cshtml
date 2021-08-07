@@ -1,4 +1,4 @@
-﻿@model GameViewModel
+﻿@model FiveHundredViewModel
 @{
     ViewData["Title"] = "500";
 }
@@ -6,17 +6,26 @@
 @section Scripts
 {
     <script>
+        // Set first team as bidder
+        ChangeBidder(0);
+
         // On bidder change
         $('.input-group input[type=radio][name=bidder]').change(function () {
-            // Set all hands to defender
+            ChangeBidder($(this).val());
+        });
+
+        function ChangeBidder(id) {
+            // Set all hands to defending
             $('.biddingTricks, .suit').hide();
             $('.defendingTricks').show();
 
             // Change bidder
-            let id = $(this).val();
             $(`#biddingTricks${id}, #suit${id}`).show();
             $(`#defendingTricks${id}`).hide();
-        })
+
+            // Enable submit
+            $('#submit').prop('disabled', false);
+        }
     </script>
 }
 
@@ -60,40 +69,40 @@
     </div>
 
     <!--Input for new hand per team-->
-    <form autocomplete="off">
+    <form asp-controller="FiveHundred" asp-action="Game" method="post" autocomplete="off">
         <div class="row mb-3">
             @for (int t = 0; t < Model.Teams.Length; t++)
             {
                 <div class="col input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            <input type="radio" name="bidder" value="@(t)" />
+                            <input asp-for="Bidder" type="radio" name="bidder" value="@(t)" />
                         </div>
                         <span class="input-group-text">@Model.Teams[t].Name</span>
                     </div>
-                    <select id="defendingTricks@(t)" class="custom-select defendingTricks">
+                    <select asp-for="Defence[t]" id="defendingTricks@(t)" class="custom-select defendingTricks">
                         <option selected>Tricks Scored...</option>
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
                     </select>
-                    <select id="biddingTricks@(t)" class="custom-select biddingTricks" style="display: none">
+                    <select asp-for="Bid[t]" id="biddingTricks@(t)" class="custom-select biddingTricks" style="display: none">
                         <option selected>Tricks Bid...</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
                     </select>
-                    <select id="suit@(t)" class="custom-select suit" style="display: none">
+                    <select asp-for="Suits[t]" id="suit@(t)" class="custom-select suit" style="display: none">
                         <option selected>Suit...</option>
                         <option>Spades</option>
                         <option>Clubs</option>
@@ -106,7 +115,7 @@
         </div>
         <div class="row mb-1">
             <div class="col-2">
-                <input type="submit" class="btn btn-primary" value="Create Hand" />
+                <input type="submit" id="submit" class="btn btn-primary" value="Create Hand" disabled />
             </div>
         </div>
     </form>

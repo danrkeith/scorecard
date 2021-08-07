@@ -17,7 +17,7 @@ namespace ScoreCardv2.Controllers
         {
             //return View("/Views/Home/Index.cshtml");
 
-            HttpContext.Session.Set("game", BitConverter.GetBytes(1));
+            HttpContext.Session.Set("game", BitConverter.GetBytes(2));
             return RedirectToAction("Game", "FiveHundred");
         }
 

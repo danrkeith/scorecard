@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
-    public class FiveHundredController : Controller
+    public class FiveHundredController : GameController
     {
+        public FiveHundredController() : base(tablePre: "fiveHundred") { }
+
         [Route("/FiveHundred/")]
         [HttpGet]
         public IActionResult Index()
@@ -23,7 +25,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostIndex(TeamsViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -132,14 +134,14 @@ namespace ScoreCardv2.Controllers
         {
             if (!HttpContext.Session.TryGetValue("game", out byte[] game))
             {
-                throw new InvalidOperationException("Game does not exist in HttpContext.Session");
+                throw new InvalidOperationException("Game not loaded");
             }
 
             // Create game data in model
-            GameViewModel model = new GameViewModel();
+            FiveHundredViewModel model = new FiveHundredViewModel();
 
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -176,7 +178,7 @@ namespace ScoreCardv2.Controllers
                     {
                         int id = reader.GetInt32(0) - 1;
 
-                        // Create team if it doesn't exist
+                        // Add team if it doesn't exist
                         if (!teams.ContainsKey(id))
                         {
                             teams.Add(id, new List<string>());
@@ -200,6 +202,44 @@ namespace ScoreCardv2.Controllers
             }
 
             return View("/Views/FiveHundred/Game.cshtml", model);
+        }
+
+        [Route("/FiveHundred/Game/")]
+        [HttpPost]
+        public IActionResult PostGame(FiveHundredViewModel model)
+        {
+            int[] teamids = TeamIDs;
+
+            // Error checking
+            if (!HttpContext.Session.TryGetValue("game", out byte[] game))
+            {
+                throw new Exception("Game not loaded");
+            }
+
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                // Iterate through teams, adding hands to game
+                for (int t = 0; t < model.Teams.Length; t++)
+                {
+                    com = SQLite.Command(
+                        con,
+                        @"
+                            INSERT INTO fiveHundred_hands (game_id, team_id, round, score)
+                            VALUES ($g, $t, $r, $s)
+                        ",
+                        ("$g", BitConverter.ToInt32(game)),
+                        ("$t", TeamIDs[t]),
+                        ("$r", null),
+                        ("$s", null));
+                }
+            }
+
+            return RedirectToAction("Game", "FiveHundred");
         }
     }
 }

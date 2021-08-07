@@ -38,7 +38,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostLogin(UserViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -102,7 +102,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostRegister(UserViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
             {
                 Batteries.Init();
                 con.Open();
