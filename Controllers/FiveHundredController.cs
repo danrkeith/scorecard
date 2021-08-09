@@ -238,6 +238,20 @@ namespace ScoreCardv2.Controllers
                 // Iterate through teams, adding hands to game
                 for (int t = 0; t < model.Teams.Length; t++)
                 {
+                    // Calculate score for hand
+                    int score;
+
+                    if (t == model.Bidder)
+                    {
+                        // Calculate for bidder
+                        score = ((int)model.Suit[t] * 20) + ((int)model.Bid[t] * 100) - 560;
+                    }
+                    else
+                    {
+                        // Calculate for defender
+                        score = (int)model.Defence[t] * 10;
+                    }
+
                     com = SQLite.Command(
                         con,
                         @"
@@ -247,7 +261,9 @@ namespace ScoreCardv2.Controllers
                         ("$g", BitConverter.ToInt32(game)),
                         ("$t", TeamIDs[t]),
                         ("$r", round),
-                        ("$s", null));
+                        ("$s", score));
+
+                    com.ExecuteNonQuery();
                 }
             }
 
