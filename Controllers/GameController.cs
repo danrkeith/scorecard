@@ -10,11 +10,8 @@ namespace ScoreCardv2.Controllers
 {
     public class GameController : Controller
     {
-        private string _tablePre;
-        public GameController(string tablePre)
-        {
-            _tablePre = tablePre;
-        }
+        private string _table;
+        private string _route;
 
         public int[] TeamIDs
         {
@@ -38,7 +35,7 @@ namespace ScoreCardv2.Controllers
                         FROM teamGames
                         WHERE id IN (
                             SELECT teamGame_id
-                            FROM {_tablePre + "_games"}
+                            FROM {_table + "_games"}
                             WHERE id = $id
                         )
                     ",
@@ -57,6 +54,12 @@ namespace ScoreCardv2.Controllers
                     return ids.ToArray();
                 }
             }
+        }
+
+        public GameController(string table, string route)
+        {
+            _route = route;
+            _table = table;
         }
     }
 }

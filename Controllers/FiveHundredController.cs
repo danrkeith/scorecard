@@ -11,7 +11,7 @@ namespace ScoreCardv2.Controllers
 {
     public class FiveHundredController : GameController
     {
-        public FiveHundredController() : base(tablePre: "fiveHundred") { }
+        public FiveHundredController() : base(route: "FiveHundred", table: "fiveHundred") { }
 
         [Route("/FiveHundred/")]
         [HttpGet]
@@ -199,6 +199,9 @@ namespace ScoreCardv2.Controllers
                         model.Teams[i].Members[j] = teams.ElementAt(i).Value[j];
                     }
                 }
+
+                // TODO: Get existing hands in game
+                HttpContext.Session.Set("round", BitConverter.GetBytes(0));
             }
 
             return View("/Views/FiveHundred/Game.cshtml", model);
@@ -223,6 +226,15 @@ namespace ScoreCardv2.Controllers
                 con.Open();
                 SqliteCommand com;
 
+                if (!HttpContext.Session.TryGetValue("round", out byte[] roundArr))
+                {
+                    throw new Exception("Round does not exist");
+                }
+
+                // Progress to next round
+                int round = BitConverter.ToInt32(roundArr) + 1;
+                HttpContext.Session.Set("round", BitConverter.GetBytes(round));
+
                 // Iterate through teams, adding hands to game
                 for (int t = 0; t < model.Teams.Length; t++)
                 {
@@ -234,7 +246,7 @@ namespace ScoreCardv2.Controllers
                         ",
                         ("$g", BitConverter.ToInt32(game)),
                         ("$t", TeamIDs[t]),
-                        ("$r", null),
+                        ("$r", round),
                         ("$s", null));
                 }
             }

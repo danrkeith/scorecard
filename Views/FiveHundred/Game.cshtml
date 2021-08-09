@@ -81,7 +81,7 @@
                         <span class="input-group-text">@Model.Teams[t].Name</span>
                     </div>
                     <select asp-for="Defence[t]" id="defendingTricks@(t)" class="custom-select defendingTricks">
-                        <option selected>Tricks Scored...</option>
+                        <option selected value="">Tricks Scored...</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -95,7 +95,7 @@
                         <option value="10">10</option>
                     </select>
                     <select asp-for="Bid[t]" id="biddingTricks@(t)" class="custom-select biddingTricks" style="display: none">
-                        <option selected>Tricks Bid...</option>
+                        <option selected value="">Tricks Bid...</option>
                         <option value="6">6</option>
                         <option value="7">7</option>
                         <option value="8">8</option>
@@ -103,12 +103,12 @@
                         <option value="10">10</option>
                     </select>
                     <select asp-for="Suits[t]" id="suit@(t)" class="custom-select suit" style="display: none">
-                        <option selected>Suit...</option>
-                        <option>Spades</option>
-                        <option>Clubs</option>
-                        <option>Diamonds</option>
-                        <option>Hearts</option>
-                        <option>No Trumps</option>
+                        <option selected value="">Suit...</option>
+                        <option value="0">Spades</option>
+                        <option value="1">Clubs</option>
+                        <option value="2">Diamonds</option>
+                        <option value="3">Hearts</option>
+                        <option value="4">No Trumps</option>
                     </select>
                 </div>
             }
