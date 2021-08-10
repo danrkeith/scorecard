@@ -132,10 +132,22 @@ namespace ScoreCardv2.Controllers
         [HttpGet]
         public IActionResult Game()
         {
-            if (!HttpContext.Session.TryGetValue("game", out byte[] game))
+            // Session variables
+            byte[] game;
+
+            // Error Checking
+            try
             {
-                throw new InvalidOperationException("Game not loaded");
+                if (!HttpContext.Session.TryGetValue("game", out game))
+                {
+                    throw new Exception("1.2");
+                }
             }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+            }
+            
 
             // Create game data in model
             FiveHundredViewModel model = new FiveHundredViewModel();
@@ -211,12 +223,24 @@ namespace ScoreCardv2.Controllers
         [HttpPost]
         public IActionResult PostGame(FiveHundredViewModel model)
         {
-            int[] teamids = TeamIDs;
+            // Session Variables
+            byte[] game, roundArr;
 
             // Error checking
-            if (!HttpContext.Session.TryGetValue("game", out byte[] game))
+            try
             {
-                throw new Exception("Game not loaded");
+                if (!HttpContext.Session.TryGetValue("game", out game))
+                {
+                    throw new Exception("1.2");
+                }
+                if (!HttpContext.Session.TryGetValue("round", out roundArr))
+                {
+                    throw new Exception("1.3");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
             }
 
             // Open connection with database
@@ -225,11 +249,6 @@ namespace ScoreCardv2.Controllers
                 Batteries.Init();
                 con.Open();
                 SqliteCommand com;
-
-                if (!HttpContext.Session.TryGetValue("round", out byte[] roundArr))
-                {
-                    throw new Exception("Round does not exist");
-                }
 
                 // Progress to next round
                 int round = BitConverter.ToInt32(roundArr) + 1;

@@ -21,10 +21,12 @@ namespace ScoreCardv2.Controllers
             return RedirectToAction("Game", "FiveHundred");
         }
 
+#nullable enable
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(string? RequestId = null)
         {
-            return View("/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = RequestId ?? (Activity.Current?.Id ?? HttpContext.TraceIdentifier) });
         }
+#nullable disable
     }
 }

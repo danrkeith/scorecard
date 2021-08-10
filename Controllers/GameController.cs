@@ -17,16 +17,16 @@ namespace ScoreCardv2.Controllers
         {
             get
             {
+                if (!HttpContext.Session.TryGetValue("game", out byte[] game))
+                {
+                    throw new Exception("1.2");
+                }
+
                 using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
                 {
                     Batteries.Init();
                     con.Open();
                     SqliteCommand com;
-
-                    if (!HttpContext.Session.TryGetValue("game", out byte[] game))
-                    {
-                        throw new Exception("Game does not exist");
-                    }
 
                     com = SQLite.Command(
                         con,
