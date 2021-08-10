@@ -268,6 +268,20 @@ namespace ScoreCardv2.Controllers
                     {
                         // Calculate for bidder
                         score = ((int)model.Suit[t] * 20) + ((int)model.Bid[t] * 100) - 560;
+
+                        // Calculate a win or loss
+                        // Start at winning all 10 tricks, taking off tricks won by defence
+                        int tricksWon = 10;
+                        foreach (int? tricks in model.Defence)
+                        {
+                            tricksWon -= tricks ?? 0;
+                        }
+
+                        // Turn points into loss if tricks did not meet bid amount
+                        if (tricksWon < model.Bid[t])
+                        {
+                            score *= -1;
+                        }
                     }
                     else
                     {
