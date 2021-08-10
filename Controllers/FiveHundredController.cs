@@ -237,6 +237,10 @@ namespace ScoreCardv2.Controllers
                 {
                     throw new Exception("1.3");
                 }
+                if (model.Bid[model.Bidder] == null || model.Defence[model.Bidder] != null)
+                {
+                    throw new Exception("2");
+                }
             }
             catch (Exception ex)
             {
@@ -255,7 +259,7 @@ namespace ScoreCardv2.Controllers
                 HttpContext.Session.Set("round", BitConverter.GetBytes(round));
 
                 // Iterate through teams, adding hands to game
-                for (int t = 0; t < model.Teams.Length; t++)
+                for (int t = 0; t < model.Bid.Length; t++)
                 {
                     // Calculate score for hand
                     int score;
