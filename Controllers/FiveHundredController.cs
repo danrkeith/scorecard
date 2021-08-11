@@ -202,18 +202,78 @@ namespace ScoreCardv2.Controllers
 
                 // Move teams to models
                 model.Teams = new GameViewModel.Team[teams.Count()];
-                for (int i = 0; i < teams.Count(); i++)
-                {
-                    model.Teams[i].Members = new string[teams.First().Value.Count()];
 
-                    for (int j = 0; j < teams.First().Value.Count(); j++)
+                for (int t = 0; t < teams.Count(); t++)
+                {
+                    model.Teams[t].Members = new string[teams.First().Value.Count()];
+
+                    // Add names to team
+                    for (int p = 0; p < teams.First().Value.Count(); p++)
                     {
-                        model.Teams[i].Members[j] = teams.ElementAt(i).Value[j];
+                        model.Teams[t].Members[p] = teams.ElementAt(t).Value[p];
                     }
                 }
 
-                // TODO: Get existing hands in game
-                HttpContext.Session.Set("round", BitConverter.GetBytes(0));
+                // Find each team's hand & catch if there are no current existing hands
+                try
+                {
+                    for (int t = 0; t < teams.Count(); t++)
+                    {
+                        for (int p = 0; p < teams.First().Value.Count(); p++)
+                        {
+                            // Get correct size of hands array
+                            int maxRound = 0;
+
+                            // Get hands
+                            com = SQLite.Command(
+                                con,
+                                @"
+                                    SELECT round, score
+                                    FROM fiveHundred_hands
+                                    WHERE game_id = $g
+                                    AND team_id = $t
+                                ",
+                                ("$g", BitConverter.ToInt32(game)),
+                                ("$t", TeamIDs[t]));
+
+                            using (SqliteDataReader reader = com.ExecuteReader())
+                            {
+                                if (!reader.HasRows)
+                                {
+                                    throw new Exception("3");
+                                }
+
+                                while (reader.Read())
+                                {
+                                    if (reader.GetInt32(0) > maxRound)
+                                    {
+                                        maxRound = reader.GetInt32(0);
+                                    }
+                                }
+                            }
+
+                            // Create hands array
+                            model.Teams[t].Hands = new int[maxRound + 1];
+
+                            using (SqliteDataReader reader = com.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    model.Teams[t].Hands[reader.GetInt32(0)] = reader.GetInt32(1);
+                                }
+                            }
+
+                            // Set round in session
+                            HttpContext.Session.Set("round", BitConverter.GetBytes(maxRound));
+                        }
+                    }
+                }
+                catch (Exception ex) when (ex.Message == "3")
+                {
+                    HttpContext.Session.Set("round", BitConverter.GetBytes(0));
+                }
+
+                ;
             }
 
             return View("/Views/FiveHundred/Game.cshtml", model);
@@ -247,16 +307,15 @@ namespace ScoreCardv2.Controllers
                 return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
             }
 
+            // Get current round
+            int round = BitConverter.ToInt32(roundArr);
+
             // Open connection with database
             using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
             {
                 Batteries.Init();
                 con.Open();
                 SqliteCommand com;
-
-                // Progress to next round
-                int round = BitConverter.ToInt32(roundArr) + 1;
-                HttpContext.Session.Set("round", BitConverter.GetBytes(round));
 
                 // Iterate through teams, adding hands to game
                 for (int t = 0; t < model.Bid.Length; t++)
@@ -281,7 +340,7 @@ namespace ScoreCardv2.Controllers
                         if (tricksWon < model.Bid[t])
                         {
                             score *= -1;
-                        }
+                        } 
                     }
                     else
                     {
@@ -303,6 +362,9 @@ namespace ScoreCardv2.Controllers
                     com.ExecuteNonQuery();
                 }
             }
+
+            // Progress to next round
+            HttpContext.Session.Set("round", BitConverter.GetBytes(round + 1));
 
             return RedirectToAction("Game", "FiveHundred");
         }
