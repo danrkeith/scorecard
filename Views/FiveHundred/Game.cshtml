@@ -45,30 +45,25 @@
                 </thead>
 
                 <tbody>
-                    <!--Show 0-hands if no hands currently exist-->
-                    @if (Model.Teams[0].Hands == null)
+                    <!--Display hands-->
+                    @for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
                     {
                         <tr>
-                            <th>0</th>
-                            @for (int t = 0; t < Model.Teams.Length; t++)
+                            <th>@(h + 1)</th>
+                            @foreach (GameViewModel.Team team in Model.Teams)
                             {
-                                <td>0</td>
+                                <td>@team.Hands[h]</td>
                             }
                         </tr>
                     }
-                    else
-                    {
-                        for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                    <!--Display score total for each team-->
+                    <tr>
+                        <th>Total</th>
+                        @foreach (GameViewModel.Team team in Model.Teams)
                         {
-                            <tr>
-                                <th>@(h + 1)</th>
-                                @foreach (GameViewModel.Team team in Model.Teams)
-                                {
-                                    <td>@team.Hands[h]</td>
-                                }
-                            </tr>
+                            <td>@team.Score</td>
                         }
-                    }
+                    </tr>
                 </tbody>
             </table>
         </div>
