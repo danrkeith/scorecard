@@ -263,8 +263,8 @@ namespace ScoreCardv2.Controllers
                                 }
                             }
 
-                            // Set round in session
-                            HttpContext.Session.Set("round", BitConverter.GetBytes(maxRound));
+                            // Set round in session to first round not played
+                            HttpContext.Session.Set("round", BitConverter.GetBytes(maxRound + 1));
                         }
                     }
                 }
@@ -272,8 +272,6 @@ namespace ScoreCardv2.Controllers
                 {
                     HttpContext.Session.Set("round", BitConverter.GetBytes(0));
                 }
-
-                ;
             }
 
             return View("/Views/FiveHundred/Game.cshtml", model);
@@ -284,7 +282,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostGame(FiveHundredViewModel model)
         {
             // Session Variables
-            byte[] game, roundArr;
+            byte[] game, round;
 
             // Error checking
             try
@@ -293,7 +291,7 @@ namespace ScoreCardv2.Controllers
                 {
                     throw new Exception("1.2");
                 }
-                if (!HttpContext.Session.TryGetValue("round", out roundArr))
+                if (!HttpContext.Session.TryGetValue("round", out round))
                 {
                     throw new Exception("1.3");
                 }
@@ -306,9 +304,6 @@ namespace ScoreCardv2.Controllers
             {
                 return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
             }
-
-            // Get current round
-            int round = BitConverter.ToInt32(roundArr);
 
             // Open connection with database
             using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
@@ -356,7 +351,7 @@ namespace ScoreCardv2.Controllers
                         ",
                         ("$g", BitConverter.ToInt32(game)),
                         ("$t", TeamIDs[t]),
-                        ("$r", round),
+                        ("$r", BitConverter.ToInt32(round)),
                         ("$s", score));
 
                     com.ExecuteNonQuery();
@@ -364,7 +359,7 @@ namespace ScoreCardv2.Controllers
             }
 
             // Progress to next round
-            HttpContext.Session.Set("round", BitConverter.GetBytes(round + 1));
+            HttpContext.Session.Set("round", BitConverter.GetBytes(BitConverter.ToInt32(round) + 1));
 
             return RedirectToAction("Game", "FiveHundred");
         }

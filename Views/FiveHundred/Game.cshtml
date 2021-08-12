@@ -56,6 +56,19 @@
                             }
                         </tr>
                     }
+                    else
+                    {
+                        for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                        {
+                            <tr>
+                                <th>@(h + 1)</th>
+                                @foreach (GameViewModel.Team team in Model.Teams)
+                                {
+                                    <td>@team.Hands[h]</td>
+                                }
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
