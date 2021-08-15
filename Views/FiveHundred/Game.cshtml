@@ -10,9 +10,12 @@
         ChangeBidder(0);
 
         // On bidder change
-        $('.input-group input[type=radio][name=bidder]').change(function () {
+        $('form input[type=radio][name=bidder]').change(function () {
             ChangeBidder($(this).val());
         });
+
+        // On selection change
+        $('form select').change(CheckValid);
 
         function ChangeBidder(id) {
             // Set all hands to defending
@@ -23,8 +26,21 @@
             $(`#biddingTricks${id}, #suit${id}`).show();
             $(`#defendingTricks${id}`).hide();
 
-            // Enable submit
-            $('#submit').prop('disabled', false);
+            CheckValid();
+        }
+
+        // Check to see if hand is valid TODO
+        function CheckValid() {
+            var enabled = true;
+
+            $('.input-group select:visible').each(function () {
+                if ($(this).val() == "") {
+                    // Don't enable submit
+                    enabled = false;
+                }
+            });
+
+            $('#submit').prop('disabled', !enabled); 
         }
     </script>
 }
