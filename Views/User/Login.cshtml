@@ -9,11 +9,11 @@
         var filled;
 
         // Check all fields are filled
-        $('.form-control').on('keyup paste', function () {
+        $('form input').on('keyup paste', function () {
             filled = true;
 
             //Iterate through all inputs
-            $('.form-control').each(function () {
+            $('form input').each(function () {
                 if ($(this).val() == '') {
                     // An input isn't filled
                     filled = false;

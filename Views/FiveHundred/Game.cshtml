@@ -14,9 +14,18 @@
             ChangeBidder($(this).val());
         });
 
+        // On suit change
+        for (let i = 0; i < @Model.Teams.Length; i++) {
+            $(`#suit${i}`).change(function () {
+                // If Misere is selected (value is 5 or 6) hide tricks
+                $(`#biddingTricks${i}`).attr('hidden', $(this).val() == 5 || $(this).val() == 6);
+            });
+        }
+
         // On selection change
         $('form select').change(CheckValid);
 
+        // Change bidder
         function ChangeBidder(id) {
             // Set all hands to defending
             $('.biddingTricks, .suit').hide();
@@ -29,7 +38,7 @@
             CheckValid();
         }
 
-        // Check to see if hand is valid TODO
+        // Check to see if hands given are valid
         function CheckValid() {
             var enabled = true;
 
@@ -133,6 +142,8 @@
                         <option value="2">Diamonds</option>
                         <option value="3">Hearts</option>
                         <option value="4">No Trumps</option>
+                        <option value="5">Misere</option>
+                        <option value="6">Open Misere</option>
                     </select>
                 </div>
             }

@@ -295,7 +295,10 @@ namespace ScoreCardv2.Controllers
                 {
                     throw new Exception("1.3");
                 }
-                if (model.Bid[model.Bidder] == null || model.Defence[model.Bidder] != null)
+
+                // Throw error on missing bid only if a misere is not bid
+                if ((model.Bid[model.Bidder] == null || model.Defence[model.Bidder] != null)
+                    && !(model.Suit[model.Bidder] == 5 || model.Suit[model.Bidder] == 6))
                 {
                     throw new Exception("2");
                 }
@@ -321,9 +324,7 @@ namespace ScoreCardv2.Controllers
                     if (t == model.Bidder)
                     {
                         // Calculate for bidder
-                        score = ((int)model.Suit[t] * 20) + ((int)model.Bid[t] * 100) - 560;
-
-                        // Calculate a win or loss
+                        // Calculate tricks won
                         // Start at winning all 10 tricks, taking off tricks won by defence
                         int tricksWon = 10;
                         foreach (int? tricks in model.Defence)
@@ -331,16 +332,32 @@ namespace ScoreCardv2.Controllers
                             tricksWon -= tricks ?? 0;
                         }
 
-                        // Turn points into loss if tricks did not meet bid amount
-                        if (tricksWon < model.Bid[t])
+                        // Check for misere or open misere
+                        if (model.Suit[t] == 5 || model.Suit[t] == 6)
                         {
-                            score *= -1;
-                        } 
+                            score = model.Suit[t] == 5 ? 250 : 500;
+
+                            // Turn points into loss if any tricks are won
+                            if (tricksWon != 0)
+                            {
+                                score *= -1;
+                            }
+                        }
+                        else
+                        {
+                            score = ((int)model.Suit[t] * 20) + ((int)model.Bid[t] * 100) - 560;
+
+                            // Turn points into loss if tricks did not meet bid amount
+                            if (tricksWon < model.Bid[t])
+                            {
+                                score *= -1;
+                            }
+                        }
                     }
                     else
                     {
-                        // Calculate for defender
-                        score = (int)model.Defence[t] * 10;
+                        // Calculate for defender if not misere; if it's a misere hand, defenders get no points.
+                        score = model.Suit[model.Bidder] == 5 || model.Suit[model.Bidder] == 6 ? 0 : (int)model.Defence[t] * 10;
                     }
 
                     com = SQLite.Command(
