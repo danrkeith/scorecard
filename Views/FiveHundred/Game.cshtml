@@ -42,13 +42,24 @@
         function CheckValid() {
             var enabled = true;
 
-            $('.input-group select:visible').each(function () {
+            // Check to see if each input has a value
+            $('form select:visible').each(function () {
                 if ($(this).val() == "") {
-                    // Don't enable submit
                     enabled = false;
                 }
             });
 
+            // Check to see if hands are possible (tricks don't add up to >10)
+            // TODO: Fix
+            var sum = 0;
+            $('form select.defendingTricks:visible').each(function () {
+                sum += +$(this).val();
+            });
+            if (sum > 10) {
+                enabled = false;
+            }
+
+            // If all requirements are met, enable submit button
             $('#submit').prop('disabled', !enabled); 
         }
     </script>
