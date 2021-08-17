@@ -10,7 +10,6 @@ namespace ScoreCardv2.Controllers
 {
     public class GameController : Controller
     {
-        private string _route;
         public string _viewPath;
         private string _table;
 
@@ -57,9 +56,8 @@ namespace ScoreCardv2.Controllers
             }
         }
 
-        public GameController(string route, string viewPath, string table)
+        public GameController(string viewPath, string table)
         {
-            _route = route;
             _viewPath = viewPath;
             _table = table;
         }

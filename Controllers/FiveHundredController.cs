@@ -12,7 +12,6 @@ namespace ScoreCardv2.Controllers
     public class FiveHundredController : GameController
     {
         public FiveHundredController() : base(
-            route: "/FiveHundred", 
             viewPath: "Views/FiveHundred", 
             table: "fiveHundred")
         { }
