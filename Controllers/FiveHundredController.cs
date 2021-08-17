@@ -11,14 +11,15 @@ namespace ScoreCardv2.Controllers
 {
     public class FiveHundredController : GameController
     {
-        public FiveHundredController() : base(route: "FiveHundred", table: "fiveHundred") { }
+        public FiveHundredController() : base(
+            route: "/FiveHundred", 
+            viewPath: "Views/FiveHundred", 
+            table: "fiveHundred")
+        { }
 
         [Route("/FiveHundred/")]
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View("Views/FiveHundred/Index.cshtml");
-        }
+        public IActionResult Index() => BaseIndex();
 
         [Route("/FiveHundred/")]
         [HttpPost]

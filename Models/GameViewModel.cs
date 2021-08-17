@@ -14,7 +14,7 @@ namespace ScoreCardv2.Models
             public int[] Hands { get; set; }
             
             public string Name => string.Join(", ", Members);
-            public int Score => Hands.Sum();
+            public int Score => Hands != null ? Hands.Sum() : 0;
         }
     }
 }

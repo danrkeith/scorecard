@@ -82,16 +82,20 @@
 
                 <tbody>
                     <!--Display hands-->
-                    @for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                    @if (Model.Teams[0].Hands != null)
                     {
-                        <tr>
-                            <th>@(h + 1)</th>
-                            @foreach (GameViewModel.Team team in Model.Teams)
-                            {
-                                <td>@team.Hands[h]</td>
-                            }
-                        </tr>
+                        for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                        {
+                            <tr>
+                                <th>@(h + 1)</th>
+                                @foreach (GameViewModel.Team team in Model.Teams)
+                                {
+                                    <td>@team.Hands[h]</td>
+                                }
+                            </tr>
+                        }
                     }
+
                     <!--Display score total for each team-->
                     <tr>
                         <th>Total</th>

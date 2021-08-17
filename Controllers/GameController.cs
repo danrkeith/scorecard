@@ -10,8 +10,9 @@ namespace ScoreCardv2.Controllers
 {
     public class GameController : Controller
     {
-        private string _table;
         private string _route;
+        public string _viewPath;
+        private string _table;
 
         public int[] TeamIDs
         {
@@ -31,14 +32,14 @@ namespace ScoreCardv2.Controllers
                     com = SQLite.Command(
                         con,
                         @$"
-                        SELECT team_id
-                        FROM teamGames
-                        WHERE id IN (
-                            SELECT teamGame_id
-                            FROM {_table + "_games"}
-                            WHERE id = $id
-                        )
-                    ",
+                            SELECT team_id
+                            FROM teamGames
+                            WHERE id IN (
+                                SELECT teamGame_id
+                                FROM {_table}_games
+                                WHERE id = $id
+                            )
+                        ",
                         ("$id", BitConverter.ToInt32(game)));
 
                     List<int> ids = new List<int>();
@@ -56,10 +57,16 @@ namespace ScoreCardv2.Controllers
             }
         }
 
-        public GameController(string table, string route)
+        public GameController(string route, string viewPath, string table)
         {
             _route = route;
+            _viewPath = viewPath;
             _table = table;
+        }
+
+        public IActionResult BaseIndex()
+        {
+            return View($"{_viewPath}/Index.cshtml");
         }
     }
 }
