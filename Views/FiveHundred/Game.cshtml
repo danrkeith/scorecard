@@ -69,7 +69,6 @@
     <!--Table for displaying all hands played-->
     <div class="row mb-3">
         <div class="col">
-<<<<<<< HEAD
             <!--Send hand to delete-->
             <form asp-controller="FiveHundred" asp-action="DeleteRound" method="post">
                 <table class="table">
@@ -90,13 +89,6 @@
                     <tbody>
                         <!--Display hands-->
                         @if (Model.Teams[0].Hands != null)
-=======
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col" class="">#</th>
-                        @for (int t = 0; t < Model.Teams.Length; t++)
->>>>>>> parent of 1882a7f (~\Views\FiveHundred\Game - Added (x) buttons to hands)
                         {
                             for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
                             {
@@ -115,7 +107,6 @@
                                 </tr>
                             }
                         }
-<<<<<<< HEAD
 
                         <!--Display score total for each team-->
                         <tr>
@@ -129,37 +120,6 @@
                     </tbody>
                 </table>
             </form>
-=======
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <!--Display hands-->
-                    @if (Model.Teams[0].Hands != null)
-                    {
-                        for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
-                        {
-                            <tr>
-                                <th>@(h + 1)</th>
-                                @foreach (GameViewModel.Team team in Model.Teams)
-                                {
-                                    <td>@team.Hands[h]</td>
-                                }
-                            </tr>
-                        }
-                    }
-
-                    <!--Display score total for each team-->
-                    <tr>
-                        <th>Total</th>
-                        @foreach (GameViewModel.Team team in Model.Teams)
-                        {
-                            <td>@team.Score</td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
->>>>>>> parent of 1882a7f (~\Views\FiveHundred\Game - Added (x) buttons to hands)
         </div>
     </div>
 
