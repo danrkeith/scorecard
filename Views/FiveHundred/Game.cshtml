@@ -69,14 +69,18 @@
     <!--Table for displaying all hands played-->
     <div class="row mb-3">
         <div class="col">
-            <table class="table table-bordered">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col" class="">#</th>
+                        <!--Headers-->
+                        <th scope="col" class="col-2">#</th>
                         @for (int t = 0; t < Model.Teams.Length; t++)
                         {
                             <th scope="col">@Model.Teams[t].Name</th>
                         }
+
+                        <!--Set column width for (x) button-->
+                        <th class="col-1"></th>
                     </tr>
                 </thead>
 
@@ -87,11 +91,17 @@
                         for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
                         {
                             <tr>
+                                <!--Hands-->
                                 <th>@(h + 1)</th>
                                 @foreach (GameViewModel.Team team in Model.Teams)
                                 {
                                     <td>@team.Hands[h]</td>
                                 }
+
+                                <!--(x) button-->
+                                <td>
+                                    <button type="button" class="btn btn-circle btn-sm btn-outline-danger">x</button>
+                                </td>
                             </tr>
                         }
                     }
@@ -103,6 +113,7 @@
                         {
                             <td>@team.Score</td>
                         }
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
