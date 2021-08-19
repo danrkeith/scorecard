@@ -10,8 +10,15 @@ namespace ScoreCardv2.Controllers
 {
     public class GameController : Controller
     {
-        public string _viewPath;
-        private string _table;
+        private readonly string _viewPath;
+        private readonly string _table;
+        private readonly string _controller;
+        public GameController(string viewPath, string table, string controller)
+        {
+            _viewPath = viewPath;
+            _table = table;
+            _controller = controller;
+        }
 
         public int[] TeamIDs
         {
@@ -56,15 +63,11 @@ namespace ScoreCardv2.Controllers
             }
         }
 
-        public GameController(string viewPath, string table)
-        {
-            _viewPath = viewPath;
-            _table = table;
-        }
+        public IActionResult BaseIndex() => View($"{_viewPath}/Index.cshtml");
 
-        public IActionResult BaseIndex()
+        public IActionResult BaseDeleteRound(int round)
         {
-            return View($"{_viewPath}/Index.cshtml");
+            return RedirectToAction("Game", _controller);
         }
     }
 }

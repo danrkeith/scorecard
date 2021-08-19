@@ -13,12 +13,17 @@ namespace ScoreCardv2.Controllers
     {
         public FiveHundredController() : base(
             viewPath: "Views/FiveHundred", 
-            table: "fiveHundred")
+            table: "fiveHundred",
+            controller: "FiveHundred")
         { }
 
         [Route("/FiveHundred/")]
         [HttpGet]
         public IActionResult Index() => BaseIndex();
+
+        [Route("/FiveHundred/Game/DeleteRound")]
+        [HttpPost]
+        public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
 
         [Route("/FiveHundred/")]
         [HttpPost]

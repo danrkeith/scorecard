@@ -69,18 +69,67 @@
     <!--Table for displaying all hands played-->
     <div class="row mb-3">
         <div class="col">
-            <table class="table">
+<<<<<<< HEAD
+            <!--Send hand to delete-->
+            <form asp-controller="FiveHundred" asp-action="DeleteRound" method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <!--Headers-->
+                            <th scope="col" class="col-2">#</th>
+                            @for (int t = 0; t < Model.Teams.Length; t++)
+                            {
+                                <th scope="col">@Model.Teams[t].Name</th>
+                            }
+
+                            <!--Set column width for (x) button-->
+                            <th class="col-1"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--Display hands-->
+                        @if (Model.Teams[0].Hands != null)
+=======
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <!--Headers-->
-                        <th scope="col" class="col-2">#</th>
+                        <th scope="col" class="">#</th>
                         @for (int t = 0; t < Model.Teams.Length; t++)
+>>>>>>> parent of 1882a7f (~\Views\FiveHundred\Game - Added (x) buttons to hands)
                         {
-                            <th scope="col">@Model.Teams[t].Name</th>
-                        }
+                            for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                            {
+                                <tr>
+                                    <!--Hands-->
+                                    <th>@(h + 1)</th>
+                                    @foreach (GameViewModel.Team team in Model.Teams)
+                                    {
+                                        <td>@team.Hands[h]</td>
+                                    }
 
-                        <!--Set column width for (x) button-->
-                        <th class="col-1"></th>
+                                    <!--(x) button-->
+                                    <td>
+                                        <button type="submit" value="@h" class="btn btn-circle btn-sm btn-outline-danger">x</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+<<<<<<< HEAD
+
+                        <!--Display score total for each team-->
+                        <tr>
+                            <th>Total</th>
+                            @foreach (GameViewModel.Team team in Model.Teams)
+                            {
+                                <td>@team.Score</td>
+                            }
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+=======
                     </tr>
                 </thead>
 
@@ -91,17 +140,11 @@
                         for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
                         {
                             <tr>
-                                <!--Hands-->
                                 <th>@(h + 1)</th>
                                 @foreach (GameViewModel.Team team in Model.Teams)
                                 {
                                     <td>@team.Hands[h]</td>
                                 }
-
-                                <!--(x) button-->
-                                <td>
-                                    <button type="button" class="btn btn-circle btn-sm btn-outline-danger">x</button>
-                                </td>
                             </tr>
                         }
                     }
@@ -113,10 +156,10 @@
                         {
                             <td>@team.Score</td>
                         }
-                        <td></td>
                     </tr>
                 </tbody>
             </table>
+>>>>>>> parent of 1882a7f (~\Views\FiveHundred\Game - Added (x) buttons to hands)
         </div>
     </div>
 

@@ -17,3 +17,5 @@
 * SQLite iterative parameter insertion
 	* https://stackoverflow.com/questions/2377506/pass-array-parameter-in-sqlcommand
 	* ~\SQLite.cs Line 50-72
+* Css Additions (~\wwwroot]\css\site.css)
+	* https://codepen.io/jnbruno/pen/vNpPpW
