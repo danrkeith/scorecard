@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
-    public class FiveHundredController : GameController
+    public class FiveHundredController : GameController<FiveHundredViewModel>
     {
         public FiveHundredController() : base(
             viewPath: "Views/FiveHundred", 
@@ -135,112 +135,113 @@ namespace ScoreCardv2.Controllers
 
         [Route("/FiveHundred/Game/")]
         [HttpGet]
-        public IActionResult Game()
-        {
-            // Session variables
-            byte[] game;
+        public IActionResult Game() => BaseGame();
+        //public IActionResult Game()
+        //{
+        //    // Session variables
+        //    byte[] game;
 
-            // Error Checking
-            try
-            {
-                if (!HttpContext.Session.TryGetValue("game", out game))
-                {
-                    throw new Exception("1.2");
-                }
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
-            }
+        //    // Error Checking
+        //    try
+        //    {
+        //        if (!HttpContext.Session.TryGetValue("game", out game))
+        //        {
+        //            throw new Exception("1.2");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+        //    }
             
 
-            // Create game data in model
-            FiveHundredViewModel model = new FiveHundredViewModel();
+        //    // Create game data in model
+        //    FiveHundredViewModel model = new FiveHundredViewModel();
 
-            // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
-            {
-                Batteries.Init();
-                con.Open();
-                SqliteCommand com;
+        //    // Open connection with database
+        //    using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+        //    {
+        //        Batteries.Init();
+        //        con.Open();
+        //        SqliteCommand com;
 
-                // Get names of team members
-                com = SQLite.Command(
-                    con,
-                    @"
-                        SELECT t.id, p.name
-                        FROM people p 
-                        INNER JOIN (
-                            SELECT *
-                            FROM teams
-                            WHERE id IN (
-                                SELECT team_id
-                                FROM teamGames
-                                WHERE id IN (
-                                    SELECT teamGame_id
-                                    FROM fiveHundred_games
-                                    WHERE id = $id
-                                )
-                            )
-                        ) t ON p.id = t.person_id
-                    ",
-                    ("$id", BitConverter.ToInt32(game)));
+        //        // Get names of team members
+        //        com = SQLite.Command(
+        //            con,
+        //            @"
+        //                SELECT t.id, p.name
+        //                FROM people p 
+        //                INNER JOIN (
+        //                    SELECT *
+        //                    FROM teams
+        //                    WHERE id IN (
+        //                        SELECT team_id
+        //                        FROM teamGames
+        //                        WHERE id IN (
+        //                            SELECT teamGame_id
+        //                            FROM fiveHundred_games
+        //                            WHERE id = $id
+        //                        )
+        //                    )
+        //                ) t ON p.id = t.person_id
+        //            ",
+        //            ("$id", BitConverter.ToInt32(game)));
 
-                // Insert names into teams
-                Dictionary<int, List<string>> teams = new Dictionary<int, List<string>>();
+        //        // Insert names into teams
+        //        Dictionary<int, List<string>> teams = new Dictionary<int, List<string>>();
 
-                using (SqliteDataReader reader = com.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        int id = reader.GetInt32(0) - 1;
+        //        using (SqliteDataReader reader = com.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                int id = reader.GetInt32(0) - 1;
 
-                        // Add team if it doesn't exist
-                        if (!teams.ContainsKey(id))
-                        {
-                            teams.Add(id, new List<string>());
-                        }
+        //                // Add team if it doesn't exist
+        //                if (!teams.ContainsKey(id))
+        //                {
+        //                    teams.Add(id, new List<string>());
+        //                }
 
-                        teams[id].Add(reader.GetString(1));
-                    }
-                }
+        //                teams[id].Add(reader.GetString(1));
+        //            }
+        //        }
 
-                // Move teams to models
-                model.Teams = new GameViewModel.Team[teams.Count()];
+        //        // Move teams to models
+        //        model.Teams = new GameViewModel.Team[teams.Count()];
 
-                for (int t = 0; t < teams.Count(); t++)
-                {
-                    model.Teams[t].Members = new string[teams.First().Value.Count()];
+        //        for (int t = 0; t < teams.Count(); t++)
+        //        {
+        //            model.Teams[t].Members = new string[teams.First().Value.Count()];
 
-                    // Add names to team
-                    for (int p = 0; p < teams.First().Value.Count(); p++)
-                    {
-                        model.Teams[t].Members[p] = teams.ElementAt(t).Value[p];
-                    }
-                }
+        //            // Add names to team
+        //            for (int p = 0; p < teams.First().Value.Count(); p++)
+        //            {
+        //                model.Teams[t].Members[p] = teams.ElementAt(t).Value[p];
+        //            }
+        //        }
 
-                // Find each team's hand & catch if there are no current existing hands
-                try
-                {
-                    for (int t = 0; t < teams.Count(); t++)
-                    {
-                        SortedDictionary<int, int> rounds = GetRounds(BitConverter.ToInt32(game), t);
+        //        // Find each team's hand & catch if there are no current existing hands
+        //        try
+        //        {
+        //            for (int t = 0; t < teams.Count(); t++)
+        //            {
+        //                SortedDictionary<int, int> rounds = GetRounds(BitConverter.ToInt32(game), t);
 
-                        // Create rounds array in model and store rounds
-                        model.Teams[t].Rounds = rounds.Values.ToArray();
+        //                // Create rounds array in model and store rounds
+        //                model.Teams[t].Rounds = rounds.Values.ToArray();
 
-                        // Set round in session to 1 higher than the highest round
-                        HttpContext.Session.Set("round", BitConverter.GetBytes(rounds.Keys.Max() + 1));
-                    }
-                }
-                catch (Exception ex) when (ex.Message == "3")
-                {
-                    HttpContext.Session.Set("round", BitConverter.GetBytes(0));
-                }
-            }
+        //                // Set round in session to 1 higher than the highest round
+        //                HttpContext.Session.Set("round", BitConverter.GetBytes(rounds.Keys.Max() + 1));
+        //            }
+        //        }
+        //        catch (Exception ex) when (ex.Message == "3")
+        //        {
+        //            HttpContext.Session.Set("round", BitConverter.GetBytes(0));
+        //        }
+        //    }
 
-            return View("/Views/FiveHundred/Game.cshtml", model);
-        }
+        //    return View("/Views/FiveHundred/Game.cshtml", model);
+        //}
 
         [Route("/FiveHundred/Game/")]
         [HttpPost]

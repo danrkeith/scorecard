@@ -5,4 +5,4 @@
 	* 1.2 Game doesn't exist
 	* 1.3 Round doesn't exist
 * 2 Invalid input
-* 3 No existing SQL rows
+* 3 SQL rows do not exist
