@@ -11,10 +11,10 @@ namespace ScoreCardv2.Models
         public struct Team
         {
             public string[] Members { get; set; }
-            public int[] Hands { get; set; }
+            public int[] Rounds { get; set; }
             
             public string Name => string.Join(", ", Members);
-            public int Score => Hands != null ? Hands.Sum() : 0;
+            public int Score => Rounds != null ? Rounds.Sum() : 0;
         }
     }
 }

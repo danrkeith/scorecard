@@ -88,21 +88,21 @@
 
                     <tbody>
                         <!--Display hands-->
-                        @if (Model.Teams[0].Hands != null)
+                        @if (Model.Teams[0].Rounds != null)
                         {
-                            for (int h = 0; h < Model.Teams[0].Hands.Length; h++)
+                            for (int h = 0; h < Model.Teams[0].Rounds.Length; h++)
                             {
                                 <tr>
                                     <!--Hands-->
                                     <th>@(h + 1)</th>
                                     @foreach (GameViewModel.Team team in Model.Teams)
                                     {
-                                        <td>@team.Hands[h]</td>
+                                        <td>@team.Rounds[h]</td>
                                     }
 
                                     <!--(x) button-->
                                     <td>
-                                        <button type="submit" value="@h" class="btn btn-circle btn-sm btn-outline-danger">x</button>
+                                        <button type="submit" name="round" value="@h" class="btn btn-circle btn-sm btn-outline-danger">x</button>
                                     </td>
                                 </tr>
                             }

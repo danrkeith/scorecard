@@ -224,37 +224,7 @@ namespace ScoreCardv2.Controllers
                 {
                     for (int t = 0; t < teams.Count(); t++)
                     {
-                        // Store all unique rounds in a sorted dictionary
-                        // This is the equivalent of a binary tree dictionary
-                        // (round number, score)
-                        SortedDictionary<int, int> rounds = new SortedDictionary<int, int>();
-
-                        // Get hands
-                        com = SQLite.Command(
-                            con,
-                            @"
-                                SELECT round, score
-                                FROM fiveHundred_hands
-                                WHERE game_id = $g
-                                AND team_id = $t
-                            ",
-                            ("$g", BitConverter.ToInt32(game)),
-                            ("$t", TeamIDs[t]));
-
-                        using (SqliteDataReader reader = com.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                int round = reader.GetInt32(0);
-                                int score = reader.GetInt32(1);
-
-                                // Only add score if it has not already been recorded
-                                if (!rounds.Keys.Contains(round))
-                                {
-                                    rounds.Add(round, score);
-                                }
-                            }
-                        }
+                        SortedDictionary<int, int> rounds = GetRounds(BitConverter.ToInt32(game), t);
 
                         // Create rounds array in model and store rounds
                         model.Teams[t].Rounds = rounds.Values.ToArray();
