@@ -224,53 +224,43 @@ namespace ScoreCardv2.Controllers
                 {
                     for (int t = 0; t < teams.Count(); t++)
                     {
-                        for (int p = 0; p < teams.First().Value.Count(); p++)
+                        // Store all unique rounds in a sorted dictionary
+                        // This is the equivalent of a binary tree dictionary
+                        // (round number, score)
+                        SortedDictionary<int, int> rounds = new SortedDictionary<int, int>();
+
+                        // Get hands
+                        com = SQLite.Command(
+                            con,
+                            @"
+                                SELECT round, score
+                                FROM fiveHundred_hands
+                                WHERE game_id = $g
+                                AND team_id = $t
+                            ",
+                            ("$g", BitConverter.ToInt32(game)),
+                            ("$t", TeamIDs[t]));
+
+                        using (SqliteDataReader reader = com.ExecuteReader())
                         {
-                            // Get correct size of hands array
-                            int maxRound = 0;
-
-                            // Get hands
-                            com = SQLite.Command(
-                                con,
-                                @"
-                                    SELECT round, score
-                                    FROM fiveHundred_hands
-                                    WHERE game_id = $g
-                                    AND team_id = $t
-                                ",
-                                ("$g", BitConverter.ToInt32(game)),
-                                ("$t", TeamIDs[t]));
-
-                            using (SqliteDataReader reader = com.ExecuteReader())
+                            while (reader.Read())
                             {
-                                if (!reader.HasRows)
-                                {
-                                    throw new Exception("3");
-                                }
+                                int round = reader.GetInt32(0);
+                                int score = reader.GetInt32(1);
 
-                                while (reader.Read())
+                                // Only add score if it has not already been recorded
+                                if (!rounds.Keys.Contains(round))
                                 {
-                                    if (reader.GetInt32(0) > maxRound)
-                                    {
-                                        maxRound = reader.GetInt32(0);
-                                    }
+                                    rounds.Add(round, score);
                                 }
                             }
-
-                            // Create hands array
-                            model.Teams[t].Hands = new int[maxRound + 1];
-
-                            using (SqliteDataReader reader = com.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    model.Teams[t].Hands[reader.GetInt32(0)] = reader.GetInt32(1);
-                                }
-                            }
-
-                            // Set round in session to first round not played
-                            HttpContext.Session.Set("round", BitConverter.GetBytes(maxRound + 1));
                         }
+
+                        // Create rounds array in model and store rounds
+                        model.Teams[t].Rounds = rounds.Values.ToArray();
+
+                        // Set round in session to 1 higher than the highest round
+                        HttpContext.Session.Set("round", BitConverter.GetBytes(rounds.Keys.Max() + 1));
                     }
                 }
                 catch (Exception ex) when (ex.Message == "3")
