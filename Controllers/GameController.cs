@@ -111,6 +111,112 @@ namespace ScoreCardv2.Controllers
 
         public IActionResult BaseIndex() => View($"{_viewPath}/Index.cshtml");
 
+        public IActionResult BasePostIndex(TeamsViewModel model)
+        {
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                // Save team ids
+                int[] teamIDs = new int[model.TeamCount];
+
+                // Iterate through teams, creating people involved and links to teams
+                for (int t = 0; t < model.TeamCount; t++)
+                {
+                    // Record ids of players simultaneously, to use in case a team does not exist
+                    int[] ids = new int[model.PlayerCount];
+
+                    // Iterate through players, inserting into people and getting ids, eliminating teams that don't contain that player
+                    for (int p = 0; p < model.PlayerCount; p++)
+                    {
+                        // Insert player into database if they don't already exist
+                        com = SQLite.Command(
+                            con,
+                            @"
+                                INSERT OR IGNORE INTO people (name)
+                                VALUES ($n)
+                            ",
+                            ("$n", model.Names[t][p]));
+
+                        com.ExecuteNonQuery();
+
+                        // Get ID of player
+                        com = SQLite.Command(
+                            con,
+                            @"
+                                SELECT id
+                                FROM people
+                                WHERE name = $n
+                                LIMIT 1
+                            ",
+                            ("$n", model.Names[t][p]));
+
+
+                        using (SqliteDataReader reader = com.ExecuteReader())
+                        {
+                            reader.Read();
+
+                            ids[p] = reader.GetInt32(0);
+                        }
+                    }
+
+                    // Create team if it doesn't already exist, store id
+                    teamIDs[t] = SQLite.CreateStructure(
+                        con,
+                        "teams",
+                        "person_id",
+                        Array.ConvertAll(ids, Convert.ToString));
+                }
+
+                // Create teamGame, pointing to each team involved in the game
+                int teamGame = SQLite.CreateStructure(
+                    con,
+                    "teamGames",
+                    "team_id",
+                    Array.ConvertAll(teamIDs, Convert.ToString));
+
+                // Start transaction to ensure that the max id is the last game inserted
+                using (SqliteTransaction transaction = con.BeginTransaction())
+                {
+                    // Create game, leaving user as null if no user is logged in
+                    com = SQLite.Command(
+                        con,
+                        @$"
+                            INSERT INTO {_table}_games (user_id, teamGame_id)
+                            VALUES ($u, $t)
+                        ",
+                        ("$u", HttpContext.Session.TryGetValue("id", out byte[] id) ? BitConverter.ToInt32(id) : (int?)null),
+                        ("$t", teamGame));
+
+                    com.ExecuteNonQuery();
+
+                    // Get id of game just inserted
+                    com = SQLite.Command(
+                        con,
+                        @$"
+                            SELECT MAX (id)
+                            FROM {_table}_games
+                        ");
+
+                    using (SqliteDataReader reader = com.ExecuteReader())
+                    {
+                        reader.Read();
+
+                        // Save id of game for session
+                        HttpContext.Session.Set("game", BitConverter.GetBytes(reader.GetInt32(0)));
+                    }
+
+                    // Commit transaction
+                    transaction.Commit();
+                }
+            }
+
+            return RedirectToAction("Game", _controller);
+        }
+
         public IActionResult BaseGame()
         {
             // Session variables
