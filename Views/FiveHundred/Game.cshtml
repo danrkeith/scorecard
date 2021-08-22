@@ -23,9 +23,6 @@
             });
         }
 
-        // On selection change
-        $('form select').change(CheckValid);
-
         // Change bidder
         function ChangeBidder(id) {
             // Set all hands to defending
@@ -35,33 +32,6 @@
             // Change bidder
             $(`#biddingTricks${id}, #suit${id}`).show();
             $(`#defendingTricks${id}`).hide();
-
-            CheckValid();
-        }
-
-        // Check to see if hands given are valid
-        function CheckValid() {
-            var enabled = true;
-
-            // Check to see if each input has a value
-            $('form select:visible').each(function () {
-                if ($(this).val() == "") {
-                    enabled = false;
-                }
-            });
-
-            // Check to see if hands are possible (tricks don't add up to >10)
-            // TODO: Fix
-            var sum = 0;
-            $('form select.defendingTricks:visible').each(function () {
-                sum += +$(this).val();
-            });
-            if (sum > 10) {
-                enabled = false;
-            }
-
-            // If all requirements are met, enable submit button
-            $('#submit').prop('disabled', !enabled); 
         }
     </script>
 }

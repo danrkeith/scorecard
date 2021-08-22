@@ -4,29 +4,6 @@
     ViewData["Title"] = "Login";
 }
 
-@section Scripts
-{
-    <script>
-        var filled;
-
-        // Check all fields are filled
-        $('form input').on('keyup paste', function () {
-            filled = true;
-
-            //Iterate through all inputs
-            $('form input').each(function () {
-                if ($(this).val() == '') {
-                    // An input isn't filled
-                    filled = false;
-                }
-            })
-
-            // Allow user to proceed if each field is filled
-            $('#submit').prop('disabled', !filled);
-        });
-    </script>
-}
-
 <form asp-controller="User" asp-action="Login" method="post" autocomplete="off">
     <div class="form-group">
         <label for="username">Username</label>

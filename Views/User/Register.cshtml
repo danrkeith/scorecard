@@ -4,34 +4,6 @@
     ViewData["Title"] = "Register";
 }
 
-@section Scripts
-{
-    <script>
-        var filled, match;
-
-        // Check all fields are filled
-        $('.form-control').on('keyup paste', function () {
-            filled = true;
-
-            //Iterate through all inputs
-            $('.form-control').each(function () {
-                if ($(this).val() == '') {
-                    // An input isn't filled
-                    filled = false;
-                }
-            })
-
-            match = $('#password').val() == $('#confirm').val();
-
-            // Alert user if passwords don't match
-            $('#warning').html(match ? '' : 'Passwords do not match');
-
-            // Allow user to proceed if requirements are met
-            $('#submit').prop('disabled', !(filled && match));
-        });
-    </script>
-}
-
 <form asp-controller="User" asp-action="Register" method="post" autocomplete="off">
     <div class="form-group">
         <label for="username">Username</label>
