@@ -59,3 +59,4 @@ C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcore
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\FiveHundred\Game.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_GameIndexLayout.cshtml.g.cs
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\BlankGame\Index.cshtml.g.cs
