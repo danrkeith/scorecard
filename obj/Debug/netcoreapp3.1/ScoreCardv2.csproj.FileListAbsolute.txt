@@ -55,8 +55,7 @@ C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcore
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Index.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Login.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\Register.cshtml.g.cs
-C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\FiveHundred\Index.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\FiveHundred\Game.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\ScoreCardv2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\BlankGame\Index.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\GameIndex.cshtml.g.cs
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_GameLayout.cshtml.g.cs

@@ -1,0 +1,62 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}
+
+<!--Table for displaying all hands played-->
+<form asp-controller="FiveHundred" asp-action="DeleteRound" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <!--Headers-->
+                <th scope="col" class="col-2">#</th>
+                @for (int t = 0; t < Model.Teams.Length; t++)
+                {
+                    <th scope="col">@Model.Teams[t].Name</th>
+                }
+
+                <!--Set column width for (x) button-->
+                <th class="col-1"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!--Display hands-->
+            @if (Model.Teams[0].Rounds != null)
+            {
+                for (int h = 0; h < Model.Teams[0].Rounds.Length; h++)
+                {
+                    <tr>
+                        <!--Hands-->
+                        <th>@(h + 1)</th>
+                        @foreach (GameViewModel.Team team in Model.Teams)
+                        {
+                            <td>@team.Rounds[h]</td>
+                        }
+
+                        <!--(x) button-->
+                        <td>
+                            <button type="submit" name="round" value="@h" class="btn btn-circle btn-sm btn-outline-danger">x</button>
+                        </td>
+                    </tr>
+                }
+            }
+
+            <!--Display score total for each team-->
+            <tr>
+                <th>Total</th>
+                @foreach (GameViewModel.Team team in Model.Teams)
+                {
+                    <td>@team.Score</td>
+                }
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+@RenderBody()
