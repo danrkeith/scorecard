@@ -14,11 +14,14 @@ namespace ScoreCardv2.Controllers
         private readonly string _viewPath;
         private readonly string _table;
         private readonly string _controller;
-        public GameController(string viewPath, string table, string controller)
+        private readonly string _title;
+
+        public GameController(string viewPath, string table, string controller, string title)
         {
             _viewPath = viewPath;
             _table = table;
             _controller = controller;
+            _title = title;
         }
 
         public int[] TeamIDs
@@ -109,7 +112,12 @@ namespace ScoreCardv2.Controllers
             return rounds;
         }
 
-        public IActionResult BaseIndex() => View($"{_viewPath}/Index.cshtml");
+        public IActionResult BaseIndex()
+        {
+            ViewData["Controller"] = _controller;
+            ViewData["Title"] = _title;
+            return View("/Views/Shared/GameIndex.cshtml");
+        }
 
         public IActionResult BasePostIndex(TeamsViewModel model)
         {

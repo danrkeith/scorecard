@@ -12,8 +12,8 @@ namespace ScoreCardv2.Controllers
         public BlankGameController() : base(
             viewPath: "Views/BlankGame",
             table: "blankGame",
-            controller: "BlankGame"
-            )
+            controller: "BlankGame",
+            title: "Blank Game")
         { }
 
         [Route("/BlankGame/")]

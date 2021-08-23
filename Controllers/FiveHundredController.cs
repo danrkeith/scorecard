@@ -14,7 +14,8 @@ namespace ScoreCardv2.Controllers
         public FiveHundredController() : base(
             viewPath: "Views/FiveHundred", 
             table: "fiveHundred",
-            controller: "FiveHundred")
+            controller: "FiveHundred",
+            title: "Five Hundred")
         { }
 
         [Route("/FiveHundred/")]
