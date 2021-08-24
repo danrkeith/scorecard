@@ -358,7 +358,7 @@ namespace ScoreCardv2.Controllers
                 com.ExecuteNonQuery();
             }
 
-            return View($"{_viewPath}/Game.cshtml", model);
+            return View($"/{_viewPath}/Game.cshtml", model);
         }
 
         public IActionResult BaseDeleteRound(int round)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
-    public class BlankGameController : GameController<GameViewModel>
+    public class BlankGameController : GameController<BlankGameViewModel>
     {
         public BlankGameController() : base(
             viewPath: "Views/BlankGame",
