@@ -1,5 +1,5 @@
 ﻿@model GameViewModel
-@{ 
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,7 +17,13 @@
                 <th scope="col" class="col-2">#</th>
                 @for (int t = 0; t < Model.Teams.Length; t++)
                 {
-                    <th scope="col">@Model.Teams[t].Name</th>
+                    <th scope="col">
+                        @Model.Teams[t].Name
+                        @if (Model.Completed && Model.LeadingTeam == t)
+                        {
+                            <span class="text-success">(Winner)</span>
+                        }
+                    </th>
                 }
 
                 <!--Set column width for (x) button-->

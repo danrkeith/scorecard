@@ -26,6 +26,6 @@ namespace ScoreCardv2.Controllers
 
         [Route("/BlankGame/Game/")]
         [HttpGet]
-        public IActionResult Game() => BaseGame();
+        public IActionResult Game() => BaseGame(x => false);
     }
 }
