@@ -19,5 +19,13 @@ namespace ScoreCardv2.Controllers
         [Route("/BlankGame/")]
         [HttpGet]
         public IActionResult Index() => BaseIndex();
+
+        [Route("/BlankGame/")]
+        [HttpPost]
+        public IActionResult PostIndex(TeamsViewModel model) => BasePostIndex(model);
+
+        [Route("/BlankGame/Game/")]
+        [HttpGet]
+        public IActionResult Game() => BaseGame();
     }
 }

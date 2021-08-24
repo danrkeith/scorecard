@@ -1,4 +1,5 @@
-﻿@{ 
+﻿@model GameViewModel
+@{ 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,7 +9,7 @@
 }
 
 <!--Table for displaying all hands played-->
-<form asp-controller="FiveHundred" asp-action="DeleteRound" method="post">
+<form asp-controller="@ViewData["Controller"]" asp-action="DeleteRound" method="post">
     <table class="table">
         <thead>
             <tr>

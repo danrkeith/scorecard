@@ -22,10 +22,6 @@ namespace ScoreCardv2.Controllers
         [HttpGet]
         public IActionResult Index() => BaseIndex();
 
-        [Route("/FiveHundred/Game/DeleteRound")]
-        [HttpPost]
-        public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
-
         [Route("/FiveHundred/")]
         [HttpPost]
         public IActionResult PostIndex(TeamsViewModel model) => BasePostIndex(model);
@@ -33,7 +29,7 @@ namespace ScoreCardv2.Controllers
         [Route("/FiveHundred/Game/")]
         [HttpGet]
         public IActionResult Game() => BaseGame();
-        
+
         [Route("/FiveHundred/Game/")]
         [HttpPost]
         public IActionResult PostGame(FiveHundredViewModel model)
@@ -137,5 +133,9 @@ namespace ScoreCardv2.Controllers
 
             return RedirectToAction("Game", "FiveHundred");
         }
+
+        [Route("/FiveHundred/Game/DeleteRound")]
+        [HttpPost]
+        public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
     }
 }
