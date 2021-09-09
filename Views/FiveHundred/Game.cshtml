@@ -46,7 +46,7 @@
     </div>
 
     <!--Input for new hand per team-->
-    <form asp-controller="FiveHundred" asp-action="Game" method="post" autocomplete="off">
+    <form asp-controller="FiveHundred" asp-action="Game" method="post">
         <div class="row mb-3">
             @for (int t = 0; t < Model.Teams.Length; t++)
             {

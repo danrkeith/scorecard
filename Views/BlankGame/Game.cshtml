@@ -4,3 +4,25 @@
     ViewData["Title"] = "Blank Game";
     ViewData["Controller"] = "BlankGame";
 }
+
+<div class="container">
+    <form asp-controller="BlankGame" asp-action="Game" method="post" autocomplete="off">
+        <div class="row mb-3">
+            @for (int t = 0; t < Model.Teams.Length; t++)
+            {
+                <div class="col input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@Model.Teams[t].Name</span>
+                    </div>
+                    <!--Inputs for hands-->
+                    <input asp-for="Scores[t]" type="text" class="form-control numeric" placeholder="Score" />
+                </div>
+            }
+        </div>
+        <div class="row mb-1">
+            <div class="col-2">
+                <input type="submit" id="submit" class="btn btn-primary" value="Create Hand" disabled />
+            </div>
+        </div>
+    </form>
+</div>

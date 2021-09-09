@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using ScoreCardv2.Models;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +29,59 @@ namespace ScoreCardv2.Controllers
         [Route("/BlankGame/Game/")]
         [HttpGet]
         public IActionResult Game() => BaseGame(x => false);
+
+        [Route("/BlankGame/Game/")]
+        [HttpPost]
+        public IActionResult PostGame(BlankGameViewModel model)
+        {
+            // Session Variables
+            byte[] game, round;
+
+            // Error checking
+            try
+            {
+                if (!HttpContext.Session.TryGetValue("game", out game))
+                {
+                    throw new Exception("1.2");
+                }
+                if (!HttpContext.Session.TryGetValue("round", out round))
+                {
+                    throw new Exception("1.3");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+            }
+
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                for (int t = 0; t < model.Scores.Length; t++)
+                {
+                    com = SQLite.Command(
+                        con,
+                        @"
+                            INSERT INTO blankGame_hands (game_id, team_id, round, score)
+                            VALUES ($g, $t, $r, $s)
+                        ",
+                        ("$g", BitConverter.ToInt32(game)),
+                        ("$t", TeamIDs[t]),
+                        ("$r", BitConverter.ToInt32(round)),
+                        ("$s", model.Scores[t]));
+
+                    com.ExecuteNonQuery();
+                }
+            }
+
+            // Progress to next round
+            HttpContext.Session.Set("round", BitConverter.GetBytes(BitConverter.ToInt32(round) + 1));
+
+            return RedirectToAction("Game", "BlankGame");
+        }
     }
 }
