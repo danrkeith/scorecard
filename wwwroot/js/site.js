@@ -1,4 +1,4 @@
-﻿$('form input, form select').on('change keyup', CheckValid)
+﻿$('form input, form select').on('change keyup', CheckValid);
 
 function CheckValid() {
     // Check passwords
@@ -21,6 +21,13 @@ function CheckValid() {
     if (sum > 10) {
         enabled = false;
     }
+
+    // Implement numeric imput in text boxes, dissalowing continuation if the value is not a number
+    $('form input.numeric:visible').each(function () {
+        if (!jQuery.isNumeric($(this).val())) {
+            enabled = false;
+        }
+    })
 
     $('#submit').prop('disabled', !enabled);
 }
