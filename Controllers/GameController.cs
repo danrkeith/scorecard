@@ -225,7 +225,8 @@ namespace ScoreCardv2.Controllers
             return RedirectToAction("Game", _controller);
         }
 
-        public IActionResult BaseGame(Func<int, bool> completionCondition)
+#nullable enable
+        public IActionResult BaseGame(Func<int, bool>? completionCondition, bool? highWins = null)
         {
             // Session variables
             byte[] game;
@@ -328,38 +329,61 @@ namespace ScoreCardv2.Controllers
                     HttpContext.Session.Set("round", BitConverter.GetBytes(0));
                 }
 
-                // Check if game is completed and get leading team
-                model.Completed = false;
-                int maxScore = 0;
-                for (int i = 0; i < model.Teams.Length; i++)
+
+                if (completionCondition != null)
                 {
-                    if (completionCondition(model.Teams[i].Score))
+                    // Check if game is completed and get leading team
+                    model.Completed = false;
+                    int winningScore = 0;
+                    for (int i = 0; i < model.Teams.Length; i++)
                     {
-                        model.Completed = true;
+                        if (completionCondition(model.Teams[i].Score))
+                        {
+                            model.Completed = true;
+                        }
+                        if (model.Teams[i].Score > winningScore && highWins != null)
+                        {
+                            winningScore = model.Teams[i].Score;
+                            model.LeadingTeam = i * ((bool)highWins ? 1 : -1);
+                        }
                     }
-                    if (model.Teams[i].Score > maxScore)
+
+                    // Update completion status in SQL database if it is auto-detected
+                    com = SQLite.Command(
+                        con,
+                        @$"
+                            UPDATE {_table}_games
+                            SET completion = $c
+                            WHERE id = $i
+                        ",
+                        ("$c", model.Completed ? 1 : 0),
+                        ("$i", BitConverter.ToInt32(game)));
+
+                    com.ExecuteNonQuery();
+                }
+                else
+                {
+                    com = SQLite.Command(
+                        con,
+                        $@"
+                            SELECT completion
+                            FROM {_table}_games
+                            WHERE id = $i
+                        ",
+                        ("$i", BitConverter.ToInt32(game)));
+
+                    using (SqliteDataReader reader = com.ExecuteReader())
                     {
-                        maxScore = model.Teams[i].Score;
-                        model.LeadingTeam = i;
+                        reader.Read();
+
+                        model.Completed = reader.GetBoolean(0);
                     }
                 }
-
-                // Update completion status in SQL database
-                com = SQLite.Command(
-                    con,
-                    @$"
-                        UPDATE {_table}_games
-                        SET completion = $c
-                        WHERE id = $i
-                    ",
-                    ("$c", model.Completed ? 1 : 0),
-                    ("$i", BitConverter.ToInt32(game)));
-
-                com.ExecuteNonQuery();
             }
 
             return View($"/{_viewPath}/Game.cshtml", model);
         }
+#nullable disable
 
         public IActionResult BaseDeleteRound(int round)
         {
@@ -398,6 +422,47 @@ namespace ScoreCardv2.Controllers
                     ",
                     ("$g", BitConverter.ToInt32(game)),
                     ("$r", roundId));
+
+                com.ExecuteNonQuery();
+            }
+
+            return RedirectToAction("Game", _controller);
+        }
+
+        public IActionResult BaseComplete()
+        {
+            // Session variables
+            byte[] game;
+
+            // Error Checking
+            try
+            {
+                if (!HttpContext.Session.TryGetValue("game", out game))
+                {
+                    throw new Exception("1.2");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+            }
+
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                // Change completion status
+                com = SQLite.Command(
+                        con,
+                        @$"
+                            UPDATE {_table}_games
+                            SET completion = $c
+                            WHERE id = $i
+                        ",
+                        ("$c", 1),
+                        ("$i", BitConverter.ToInt32(game)));
 
                 com.ExecuteNonQuery();
             }

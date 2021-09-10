@@ -9,13 +9,7 @@ namespace ScoreCardv2.Controllers
     {
         [Route("/")]
         [HttpGet]
-        public IActionResult Index()
-        {
-            //return View("/Views/Home/Index.cshtml");
-
-            HttpContext.Session.Set("game", BitConverter.GetBytes(2));
-            return RedirectToAction("Game", "BlankGame");
-        }
+        public IActionResult Index() => View("/Views/Home/Index.cshtml");
 
 #nullable enable
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

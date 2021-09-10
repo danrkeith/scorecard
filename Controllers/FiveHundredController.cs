@@ -28,7 +28,7 @@ namespace ScoreCardv2.Controllers
 
         [Route("/FiveHundred/Game/")]
         [HttpGet]
-        public IActionResult Game() => BaseGame(x => x <= -500 || x >= 500);
+        public IActionResult Game() => BaseGame(x => x <= -500 || x >= 500, true);
 
         [Route("/FiveHundred/Game/")]
         [HttpPost]

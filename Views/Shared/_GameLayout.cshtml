@@ -8,6 +8,11 @@
     @RenderSection("Scripts", required: false)
 }
 
+@if (Model.Completed)
+{
+    <div class="text-success text-center">&#10003 Completed</div>
+}
+
 <!--Table for displaying all hands played-->
 <form asp-controller="@ViewData["Controller"]" asp-action="DeleteRound" method="post">
     <table class="table">
@@ -17,9 +22,9 @@
                 <th scope="col" class="col-2">#</th>
                 @for (int t = 0; t < Model.Teams.Length; t++)
                 {
-                    <th scope="col">
+                    <th scope="col" class="col-3">
                         @Model.Teams[t].Name
-                        @if (Model.Completed && Model.LeadingTeam == t)
+                        @if (Model.Completed && (Model.LeadingTeam ?? -1) == t)
                         {
                             <span class="text-success">(Winner)</span>
                         }

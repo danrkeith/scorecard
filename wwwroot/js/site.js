@@ -22,7 +22,7 @@ function CheckValid() {
         enabled = false;
     }
 
-    // Implement numeric imput in text boxes, dissalowing continuation if the value is not a number
+    // If there are numeric text boxes, only allow continuation if they are numbers
     $('form input.numeric:visible').each(function () {
         if (!jQuery.isNumeric($(this).val())) {
             enabled = false;

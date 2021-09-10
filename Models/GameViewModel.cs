@@ -8,7 +8,7 @@ namespace ScoreCardv2.Models
     public class GameViewModel
     {
         public bool Completed { get; set; } = false;
-        public int LeadingTeam { get; set; } = 0;
+        public int? LeadingTeam { get; set; }
         public Team[] Teams { get; set; }
         public struct Team
         {

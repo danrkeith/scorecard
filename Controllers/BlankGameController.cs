@@ -28,7 +28,7 @@ namespace ScoreCardv2.Controllers
 
         [Route("/BlankGame/Game/")]
         [HttpGet]
-        public IActionResult Game() => BaseGame(x => false);
+        public IActionResult Game() => BaseGame(null, false);
 
         [Route("/BlankGame/Game/")]
         [HttpPost]
@@ -83,5 +83,13 @@ namespace ScoreCardv2.Controllers
 
             return RedirectToAction("Game", "BlankGame");
         }
+
+        [Route("/BlankGame/Game/DeleteRound")]
+        [HttpPost]
+        public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
+
+        [Route("/BlankGame/Game/Complete")]
+        [HttpGet]
+        public IActionResult Complete() => BaseComplete();
     }
 }
