@@ -88,8 +88,8 @@ namespace ScoreCardv2.Controllers
         [HttpPost]
         public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
 
-        [Route("/BlankGame/Game/Complete")]
+        [Route("/BlankGame/Game/ToggleCompletion")]
         [HttpGet]
-        public IActionResult Complete() => BaseComplete();
+        public IActionResult ToggleCompletion() => BaseToggleCompletion();
     }
 }

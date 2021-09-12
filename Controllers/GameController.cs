@@ -429,7 +429,7 @@ namespace ScoreCardv2.Controllers
             return RedirectToAction("Game", _controller);
         }
 
-        public IActionResult BaseComplete()
+        public IActionResult BaseToggleCompletion()
         {
             // Session variables
             byte[] game;
@@ -452,7 +452,25 @@ namespace ScoreCardv2.Controllers
                 Batteries.Init();
                 con.Open();
                 SqliteCommand com;
+                // Check completion status
+                bool completion;
 
+                com = SQLite.Command(
+                    con,
+                    @$"
+                        SELECT completion
+                        FROM {_table}_games
+                        WHERE id = $i
+                    ",
+                    ("$i", BitConverter.ToInt32(game)));
+
+                using (SqliteDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+
+                    completion = reader.GetInt32(0) == 1;
+                }
+                
                 // Change completion status
                 com = SQLite.Command(
                         con,
@@ -461,7 +479,7 @@ namespace ScoreCardv2.Controllers
                             SET completion = $c
                             WHERE id = $i
                         ",
-                        ("$c", 1),
+                        ("$c", !completion),
                         ("$i", BitConverter.ToInt32(game)));
 
                 com.ExecuteNonQuery();
