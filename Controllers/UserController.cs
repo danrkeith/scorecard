@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ScoreCardv2.Models;
 using SQLitePCL;
 using System;
+using System.Collections.Generic;
 
 namespace ScoreCardv2.Controllers
 {
@@ -148,9 +149,5 @@ namespace ScoreCardv2.Controllers
             // Log user in
             return PostLogin(model);
         }
-
-        [Route("/User/CurrentGames/")]
-        [HttpGet]
-        public IActionResult CurrentGames() => View("/Views/User/CurrentGames.cshtml");
     }
 }
