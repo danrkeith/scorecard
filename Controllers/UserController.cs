@@ -148,5 +148,9 @@ namespace ScoreCardv2.Controllers
             // Log user in
             return PostLogin(model);
         }
+
+        [Route("/User/CurrentGames/")]
+        [HttpGet]
+        public IActionResult CurrentGames() => View("/Views/User/CurrentGames.cshtml");
     }
 }

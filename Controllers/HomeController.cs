@@ -9,7 +9,11 @@ namespace ScoreCardv2.Controllers
     {
         [Route("/")]
         [HttpGet]
-        public IActionResult Index() => View("/Views/Home/Index.cshtml");
+        public IActionResult Index()
+        {
+            HttpContext.Session.Set("id", BitConverter.GetBytes(1));
+            return View("/Views/Home/Index.cshtml");
+        }
 
 #nullable enable
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
