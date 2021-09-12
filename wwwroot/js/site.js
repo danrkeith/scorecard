@@ -1,10 +1,15 @@
 ﻿$('form input, form select').on('change keyup', CheckValid);
 
 function CheckValid() {
-    // Check passwords
-    var enabled = $('#password').val() == $('#confirm').val();
+    var enabled = true;
 
-    $('#warning').html(enabled ? '' : 'Passwords do not match');
+    // Check passwords
+    if ($('#confirm').length == 1) {
+        if ($('#password').val() != $('#confirm').val()) {
+            enabled = false;
+        }
+        $('#warning').html(enabled ? '' : 'Passwords do not match');
+    }
 
     // Check  if fields are filled
     $('form input:visible, form select:visible').each(function () {

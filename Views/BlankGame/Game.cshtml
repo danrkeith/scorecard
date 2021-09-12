@@ -28,7 +28,14 @@
     </form>
     <div class="row">
         <div class="col-3 input-group">
-            <a asp-controller="BlankGame" asp-action="Complete" class="btn btn-success">Mark as Completed</a>
+                @if (Model.Completed)
+                {
+                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as Completed</a>
+                }
+                else
+                {
+                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as In Progress</a>
+                }
         </div>
     </div>
 </div>
