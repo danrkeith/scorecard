@@ -149,5 +149,74 @@ namespace ScoreCardv2.Controllers
             // Log user in
             return PostLogin(model);
         }
+
+        [Route("/User/ChangePassword/")]
+        [HttpGet]
+        public IActionResult ChangePassword(string warning = null)
+        {
+            ViewBag.Warning = warning;
+            return View("/Views/User/ChangePassword.cshtml");
+        }
+
+        [Route("/User/ChangePassword/")]
+        [HttpPost]
+        public IActionResult PostChangePassword(UserViewModel model)
+        {
+            byte[] id;
+
+            // Error Checker
+            try
+            {
+                if (!HttpContext.Session.TryGetValue("id", out id))
+                {
+                    throw new Exception("1.1");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+            }
+
+            // Open connection with database
+            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                com = SQLite.Command(
+                    con,
+                    @"
+                        SELECT hash
+                        FROM users
+                        WHERE id = $i
+                    ",
+                    ("$i", BitConverter.ToInt32(id)));
+
+                using (SqliteDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+
+                    if (model.OldPassword != Encryption.DecryptString(_iConfig.GetValue<string>("EncryptionKey"), reader.GetString(0)))
+                    {
+                        return RedirectToAction("ChangePassword", "User", new { warning = "Current password is incorrect" });
+                    }
+                }
+
+                com = SQLite.Command(
+                    con,
+                    @"
+                        UPDATE users
+                        SET hash = $h
+                        WHERE id = $i
+                    ",
+                    ("$h", Encryption.EncryptString(_iConfig.GetValue<string>("EncryptionKey"), model.Password)),
+                    ("$i", BitConverter.ToInt32(id)));
+
+                com.ExecuteNonQuery();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
