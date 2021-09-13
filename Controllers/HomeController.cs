@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using ScoreCardv2.Models;
+using SQLitePCL;
 using System;
 using System.Diagnostics;
 
@@ -11,8 +13,38 @@ namespace ScoreCardv2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            HttpContext.Session.Set("id", BitConverter.GetBytes(1));
-            return View("/Views/Home/Index.cshtml");
+            byte[] id;
+            UserViewModel model = new UserViewModel();
+
+            // Check for logged in user
+            if (HttpContext.Session.TryGetValue("id", out id))
+            {
+                // Open connection with database
+                using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+                {
+                    Batteries.Init();
+                    con.Open();
+                    SqliteCommand com;
+
+                    com = SQLite.Command(
+                        con,
+                        @"
+                            SELECT username
+                            FROM users
+                            WHERE id = $i
+                        ",
+                        ("$i", BitConverter.ToInt32(id)));
+
+                    using (SqliteDataReader reader = com.ExecuteReader())
+                    {
+                        reader.Read();
+
+                        model.Username = reader.GetString(0);
+                    }
+                }
+            }
+
+            return View("/Views/Home/Index.cshtml", model);
         }
 
 #nullable enable

@@ -1,19 +1,9 @@
-﻿@{
+﻿@model UserViewModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    @if (Context.Session.TryGetValue("id", out byte[] id))
-    {
-        <h1 class="display-4">Welcome, User @BitConverter.ToInt32(id)</h1>
-    }
-    else
-    { 
-        <h1 class="display-4">Welcome</h1>
-    }
-    @if (Context.Session.TryGetValue("game", out byte[] game))
-    {
-        <h1 class="display-4">Game @BitConverter.ToInt32(game)</h1>
-    }
+    <h1 class="display-4">Welcome @(Model.Username ?? "")</h1>
 </div>
