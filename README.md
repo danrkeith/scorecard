@@ -1,5 +1,7 @@
 ﻿# SCORECARD
+
 ## Video Demo: <>
+
 ## Description:
 
 ## Example Account
@@ -9,6 +11,7 @@ Username: **cs50**
 Password: **harvard**
 
 ## References:
+
 * DOTNET (ASP.NET, SQLite.Net)
 	* https://docs.microsoft.com/en-us/documentation/
 * JQuery
