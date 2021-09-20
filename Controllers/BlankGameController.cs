@@ -84,12 +84,16 @@ namespace ScoreCardv2.Controllers
             return RedirectToAction("Game", "BlankGame");
         }
 
-        [Route("/BlankGame/Game/DeleteRound")]
+        [Route("/BlankGame/Game/DeleteRound/")]
         [HttpPost]
         public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
 
-        [Route("/BlankGame/Game/ToggleCompletion")]
+        [Route("/BlankGame/Game/ToggleCompletion/")]
         [HttpGet]
         public IActionResult ToggleCompletion() => BaseToggleCompletion();
+
+        [Route("/BlankGame/Resume/")]
+        [HttpGet]
+        public IActionResult Resume() => BaseResume();
     }
 }

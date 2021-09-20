@@ -218,46 +218,5 @@ namespace ScoreCardv2.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        [Route("/User/Log/")]
-        [HttpGet]
-        public IActionResult Log()
-        {
-            byte[] id;
-
-            // Error Checker
-            try
-            {
-                if (!HttpContext.Session.TryGetValue("id", out id))
-                {
-                    throw new Exception("1.1");
-                }
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
-            }
-
-            LogViewModel model = new LogViewModel
-            {
-                GameTypes = new LogViewModel.GameType[20]
-            };
-
-            // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
-            {
-                Batteries.Init();
-                con.Open();
-                SqliteCommand com;
-
-                com = SQLite.Command(
-                    con,
-                    @"
-                        SELECT 
-                    ");
-            }
-
-            return View("/Views/User/Log.cshtml", model);
-        }
     }
 }

@@ -487,5 +487,55 @@ namespace ScoreCardv2.Controllers
 
             return RedirectToAction("Game", _controller);
         }
+
+        public IActionResult BaseResume()
+        {
+            // Session variables
+            byte[] user;
+
+            // Error Checking
+            try
+            {
+                if (!HttpContext.Session.TryGetValue("id", out user))
+                {
+                    throw new Exception("1.1");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
+            }
+
+            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            {
+                Batteries.Init();
+                con.Open();
+                SqliteCommand com;
+
+                com = SQLite.Command(
+                    con,
+                    @$"
+                        SELECT MAX(id)
+                        FROM {_table}_games
+                        WHERE user_id = $u
+                        AND completion = 0
+                    ",
+                    ("$u", BitConverter.ToInt32(user)));
+
+                using (SqliteDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+
+                    if (reader.IsDBNull(0))
+                    {
+                        return RedirectToAction("Index", "Home", new { warning = "No game currently in progress" });
+                    }
+
+                    HttpContext.Session.Set("game", BitConverter.GetBytes(reader.GetInt32(0)));
+                }
+            }
+
+            return RedirectToAction("Game", _controller);
+        }
     }
 }

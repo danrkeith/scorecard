@@ -134,8 +134,12 @@ namespace ScoreCardv2.Controllers
             return RedirectToAction("Game", "FiveHundred");
         }
 
-        [Route("/FiveHundred/Game/DeleteRound")]
+        [Route("/FiveHundred/Game/DeleteRound/")]
         [HttpPost]
         public IActionResult DeleteRound(int round) => BaseDeleteRound(round);
+
+        [Route("/FiveHundred/Resume/")]
+        [HttpGet]
+        public IActionResult Resume() => BaseResume();
     }
 }

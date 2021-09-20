@@ -11,7 +11,7 @@ namespace ScoreCardv2.Controllers
     {
         [Route("/")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string warning = null)
         {
             byte[] id;
             UserViewModel model = new UserViewModel();
@@ -44,6 +44,7 @@ namespace ScoreCardv2.Controllers
                 }
             }
 
+            ViewBag.Warning = warning;
             return View("/Views/Home/Index.cshtml", model);
         }
 

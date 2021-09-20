@@ -60,4 +60,4 @@ C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcore
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\GameIndex.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_GameLayout.cshtml.g.cs
 C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\BlankGame\Game.cshtml.g.cs
-C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\CurrentGames.cshtml.g.cs
+C:\Users\danrk\source\repos\CSharpDotnet\ScoreCard\ScoreCardv2\obj\Debug\netcoreapp3.1\Razor\Views\User\ChangePassword.cshtml.g.cs
