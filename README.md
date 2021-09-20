@@ -24,4 +24,5 @@
 #### Example Account
 
 Username: **cs50**
+
 Password: **harvard**
