@@ -1,14 +1,14 @@
 ﻿# SCORECARD
-### Video Demo: <>
-### Description:
+## Video Demo: <>
+## Description:
 
-### Example Account
+## Example Account
 
 Username: **cs50**
 
 Password: **harvard**
 
-### References:
+## References:
 * DOTNET (ASP.NET, SQLite.Net)
 	* https://docs.microsoft.com/en-us/documentation/
 * JQuery
