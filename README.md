@@ -19,3 +19,9 @@
 	* ~\SQLite.cs Line 50-72
 * Css Additions (~\wwwroot]\css\site.css)
 	* https://codepen.io/jnbruno/pen/vNpPpW
+
+
+#### Example Account
+
+Username: **cs50**
+Password: **harvard**

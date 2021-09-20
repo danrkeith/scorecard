@@ -5,6 +5,7 @@ using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
@@ -30,7 +31,7 @@ namespace ScoreCardv2.Controllers
                     throw new Exception("1.2");
                 }
 
-                using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+                using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
                 {
                     Batteries.Init();
                     con.Open();
@@ -68,7 +69,7 @@ namespace ScoreCardv2.Controllers
         {
             SortedDictionary<int, int> rounds = new SortedDictionary<int, int>();
 
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -118,7 +119,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult BasePostIndex(TeamsViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -245,7 +246,7 @@ namespace ScoreCardv2.Controllers
             TViewModel model = new TViewModel();
 
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -399,7 +400,7 @@ namespace ScoreCardv2.Controllers
             }
 
             // Open connection
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -443,7 +444,7 @@ namespace ScoreCardv2.Controllers
                 return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
             }
 
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -466,7 +467,7 @@ namespace ScoreCardv2.Controllers
 
                     completion = reader.GetInt32(0) == 1;
                 }
-
+                
                 // Change completion status
                 com = SQLite.Command(
                         con,
@@ -502,7 +503,7 @@ namespace ScoreCardv2.Controllers
                 return RedirectToAction("Error", "Home", new { RequestId = ex.Message });
             }
 
-            using (SqliteConnection con = new SqliteConnection("Data Source=Data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();

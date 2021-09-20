@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\app_data\Data.db" />
+  </ItemGroup>
+
 </Project>

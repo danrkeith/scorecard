@@ -1,3 +1,5 @@
+using System;
+
 namespace ScoreCardv2.Models
 {
     public class ErrorViewModel

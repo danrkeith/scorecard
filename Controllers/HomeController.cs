@@ -20,7 +20,7 @@ namespace ScoreCardv2.Controllers
             if (HttpContext.Session.TryGetValue("id", out id))
             {
                 // Open connection with database
-                using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+                using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
                 {
                     Batteries.Init();
                     con.Open();

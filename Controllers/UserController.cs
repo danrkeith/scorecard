@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ScoreCardv2.Models;
 using SQLitePCL;
 using System;
+using System.Collections.Generic;
 
 namespace ScoreCardv2.Controllers
 {
@@ -38,7 +39,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostLogin(UserViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -102,7 +103,7 @@ namespace ScoreCardv2.Controllers
         public IActionResult PostRegister(UserViewModel model)
         {
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
@@ -119,7 +120,7 @@ namespace ScoreCardv2.Controllers
                         )
                     ",
                     ("$u", model.Username));
-
+                
                 using (SqliteDataReader reader = com.ExecuteReader())
                 {
                     reader.Read();
@@ -177,7 +178,7 @@ namespace ScoreCardv2.Controllers
             }
 
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();

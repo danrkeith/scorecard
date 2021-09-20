@@ -53,7 +53,7 @@ namespace ScoreCardv2
 
                 // Create parameters and insert into query
                 string[] parameters = new string[validStructures.Count];
-
+                
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     parameters[i] = $"$id{i}";
@@ -107,7 +107,7 @@ namespace ScoreCardv2
             }
 
             int id = validStructures.FirstOrDefault();
-
+            
             // Create new team if none already exists
             if (id == 0)
             {

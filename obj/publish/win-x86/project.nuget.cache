@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "gWAlBfGgG3qePe+yv+NDdlp///26IWwHLFRrY8a5CcviH2pDcmma/5bIvqwf6S3FC5TYPVL2okzDG5KSaT2xhA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\danrk\\source\\repos\\CSharpDotnet\\ScoreCard\\ScoreCardv2\\ScoreCardv2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\danrk\\.nuget\\packages\\microsoft.data.sqlite\\5.0.8\\microsoft.data.sqlite.5.0.8.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.8\\microsoft.data.sqlite.core.5.0.8.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.4\\sqlitepclraw.bundle_e_sqlite3.2.0.4.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\sqlitepclraw.core\\2.0.4\\sqlitepclraw.core.2.0.4.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.4\\sqlitepclraw.lib.e_sqlite3.2.0.4.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\sqlitepclraw.provider.dynamic_cdecl\\2.0.4\\sqlitepclraw.provider.dynamic_cdecl.2.0.4.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\3.1.19\\microsoft.netcore.app.runtime.win-x86.3.1.19.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\3.1.19\\microsoft.windowsdesktop.app.runtime.win-x86.3.1.19.nupkg.sha512",
+    "C:\\Users\\danrk\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\3.1.19\\microsoft.aspnetcore.app.runtime.win-x86.3.1.19.nupkg.sha512"
+  ],
+  "logs": []
+}

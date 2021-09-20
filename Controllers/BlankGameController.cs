@@ -3,6 +3,9 @@ using Microsoft.Data.Sqlite;
 using ScoreCardv2.Models;
 using SQLitePCL;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
@@ -51,7 +54,7 @@ namespace ScoreCardv2.Controllers
             }
 
             // Open connection with database
-            using (SqliteConnection con = new SqliteConnection("Data Source=data.db"))
+            using (SqliteConnection con = new SqliteConnection("Data Source=wwwroot/app_data/Data.db"))
             {
                 Batteries.Init();
                 con.Open();
