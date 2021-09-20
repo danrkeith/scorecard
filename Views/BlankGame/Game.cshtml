@@ -30,11 +30,11 @@
         <div class="col-3 input-group">
                 @if (Model.Completed)
                 {
-                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as Completed</a>
+                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as In Progress</a>
                 }
                 else
                 {
-                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as In Progress</a>
+                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as Completed</a>
                 }
         </div>
     </div>

@@ -105,6 +105,11 @@ namespace ScoreCardv2.Controllers
                             {
                                 score *= -1;
                             }
+                            // Calculate for a grand slam
+                            else if (tricksWon == 10 && score < 250)
+                            {
+                                score = 250;
+                            }
                         }
                     }
                     else
