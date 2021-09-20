@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace ScoreCardv2.Models
 {
@@ -14,7 +11,7 @@ namespace ScoreCardv2.Models
         {
             public string[] Members { get; set; }
             public int[] Rounds { get; set; }
-            
+
             public string Name => string.Join(", ", Members);
             public int Score => Rounds != null ? Rounds.Sum() : 0;
         }

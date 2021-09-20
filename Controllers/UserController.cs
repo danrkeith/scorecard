@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using ScoreCardv2.Models;
 using SQLitePCL;
 using System;
-using System.Collections.Generic;
 
 namespace ScoreCardv2.Controllers
 {
@@ -120,7 +119,7 @@ namespace ScoreCardv2.Controllers
                         )
                     ",
                     ("$u", model.Username));
-                
+
                 using (SqliteDataReader reader = com.ExecuteReader())
                 {
                     reader.Read();

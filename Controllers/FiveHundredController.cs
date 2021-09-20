@@ -3,16 +3,13 @@ using Microsoft.Data.Sqlite;
 using ScoreCardv2.Models;
 using SQLitePCL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ScoreCardv2.Controllers
 {
     public class FiveHundredController : GameController<FiveHundredViewModel>
     {
         public FiveHundredController() : base(
-            viewPath: "Views/FiveHundred", 
+            viewPath: "Views/FiveHundred",
             table: "fiveHundred",
             controller: "FiveHundred")
         { }
