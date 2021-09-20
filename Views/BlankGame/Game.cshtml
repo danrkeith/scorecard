@@ -1,5 +1,5 @@
 ﻿@model BlankGameViewModel
-@{ 
+@{
     Layout = "~/Views/Shared/_GameLayout.cshtml";
     ViewData["Title"] = "Blank Game";
     ViewData["Controller"] = "BlankGame";
@@ -28,14 +28,14 @@
     </form>
     <div class="row">
         <div class="col-3 input-group">
-                @if (Model.Completed)
-                {
-                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as In Progress</a>
-                }
-                else
-                {
-                    <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as Completed</a>
-                }
+            @if (Model.Completed)
+            {
+                <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as In Progress</a>
+            }
+            else
+            {
+                <a asp-controller="BlankGame" asp-action="ToggleCompletion" class="btn btn-success">Mark as Completed</a>
+            }
         </div>
     </div>
 </div>
