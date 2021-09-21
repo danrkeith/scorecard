@@ -15,15 +15,18 @@ TODO
 Navigate to the project directory.
 
 For Windows:
+
 	cd .\bin\Release\netcoreapp3.1\publish
 	start .\ScoreCardv2-win-x64
 
 For MacOS:
+
 	cd .\bin\Release\netcoreapp3.1\publish
 	chmod +x .\ScoreCardv2-osx-x64
 	.\ScoreCardv2-osx-x64
 
 For Linux:
+
 	cd .\bin\Release\netcoreapp3.1\publish
 
 #### Example Account Included
