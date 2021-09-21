@@ -4,11 +4,7 @@
 
 <URL>
 
-## Description
-
-TODO
-
-## Using Application
+## Using the Application
 
 ### Running and Hosting Website
 
@@ -33,9 +29,13 @@ TODO
 
 ### Example Account Included
 
-Username: **cs50**
+Username: `cs50`
 
-Password: **harvard**
+Password: `harvard`
+
+## Description
+
+TODO
 
 ## References
 
