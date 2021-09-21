@@ -12,8 +12,8 @@ TODO
 
 ### Running and Hosting Website
 
-1. Navigate to the project directory.
-2. Run the project locally.
+1. Navigate to the project directory
+2. Run the project locally
 	- For Windows:
 
 			cd .\bin\Release\netcoreapp3.1\publish
@@ -28,6 +28,8 @@ TODO
 	- For Linux:
 
 			cd .\bin\Release\netcoreapp3.1\publish
+
+3. Navigate to the URL specified in the console window
 
 ### Example Account Included
 
