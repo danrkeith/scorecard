@@ -4,9 +4,7 @@
 
 <URL>
 
-## Using the Application
-
-### Running and Hosting Website
+## Running the Application
 
 1. Navigate to the project directory
 2. Run the project locally
@@ -27,7 +25,7 @@
 
 3. Navigate to the URL specified in the console window
 
-### Example Account Included
+## Example Account Included
 
 Username: `cs50`
 
