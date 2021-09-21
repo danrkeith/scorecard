@@ -25,15 +25,15 @@
 
 3. Navigate to the URL specified in the console window
 
+## Description
+
+TODO
+
 ## Example Account Included
 
 Username: `cs50`
 
 Password: `harvard`
-
-## Description
-
-TODO
 
 ## References
 
