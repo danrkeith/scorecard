@@ -19,7 +19,11 @@
 			chmod +x .\ScoreCardv2-osx-x64
 			.\ScoreCardv2-osx-x64
 
-	- For Linux:
+	- For 64-Bit Linux (e.g. Ubuntu):
+
+			cd .\bin\Release\netcoreapp3.1\publish
+
+	- For 32-Bit ARM Linux (e.g. Raspbian)
 
 			cd .\bin\Release\netcoreapp3.1\publish
 
