@@ -22,10 +22,14 @@
 	- For 64-Bit Linux (e.g. Ubuntu):
 
 			cd .\bin\Release\netcoreapp3.1\publish
+			chmod +x .\ScoreCardv2-linux-x64
+			.\ScoreCardv2-linux-x64
 
 	- For 32-Bit ARM Linux (e.g. Raspbian)
 
 			cd .\bin\Release\netcoreapp3.1\publish
+			chmod +x .\ScoreCardv2-linux-arm
+			.\ScoreCardv2-linux-arm
 
 3. Navigate to the URL specified in the console window
 
