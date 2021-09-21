@@ -10,7 +10,7 @@ TODO
 
 ## Using Application
 
-#### Running and Hosting Website
+### Running and Hosting Website
 
 Navigate to the project directory.
 
@@ -29,7 +29,7 @@ For Linux:
 
 	cd .\bin\Release\netcoreapp3.1\publish
 
-#### Example Account Included
+### Example Account Included
 
 Username: **cs50**
 
