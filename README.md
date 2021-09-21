@@ -12,22 +12,22 @@ TODO
 
 ### Running and Hosting Website
 
-Navigate to the project directory.
+1. Navigate to the project directory.
+2. Run the project locally.
+	- For Windows:
 
-For Windows:
+			cd .\bin\Release\netcoreapp3.1\publish
+			start .\ScoreCardv2-win-x64
 
-	cd .\bin\Release\netcoreapp3.1\publish
-	start .\ScoreCardv2-win-x64
+	- For MacOS:
 
-For MacOS:
+			cd .\bin\Release\netcoreapp3.1\publish
+			chmod +x .\ScoreCardv2-osx-x64
+			.\ScoreCardv2-osx-x64
 
-	cd .\bin\Release\netcoreapp3.1\publish
-	chmod +x .\ScoreCardv2-osx-x64
-	.\ScoreCardv2-osx-x64
+	- For Linux:
 
-For Linux:
-
-	cd .\bin\Release\netcoreapp3.1\publish
+			cd .\bin\Release\netcoreapp3.1\publish
 
 ### Example Account Included
 
@@ -37,19 +37,19 @@ Password: **harvard**
 
 ## References
 
-* DOTNET (ASP.NET, SQLite.Net)
-	* https://docs.microsoft.com/en-us/documentation/
-* JQuery
-	* https://www.w3schools.com/jquery/
-* ~\Encryption.cs
-	* https://www.c-sharpcorner.com/article/encryption-and-decryption-using-a-symmetric-key-in-c-sharp/
-* Javascript Closures
-	* https://stackoverflow.com/questions/21010963/how-to-get-outer-loop-index-inside-anonymous-function-call
-* ASP.NET App settings
-	* https://www.c-sharpcorner.com/article/reading-values-from-appsettings-json-in-asp-net-core/
-	* ~\Controllers\UserController.cs Line 14-21
-* SQLite iterative parameter insertion
-	* https://stackoverflow.com/questions/2377506/pass-array-parameter-in-sqlcommand
-	* ~\SQLite.cs Line 50-72
-* Css Additions (~\wwwroot]\css\site.css)
-	* https://codepen.io/jnbruno/pen/vNpPpW
+- DOTNET (ASP.NET, SQLite.Net)
+	- https://docs.microsoft.com/en-us/documentation/
+- JQuery
+	- https://www.w3schools.com/jquery/
+- .\Encryption.cs
+	- https://www.c-sharpcorner.com/article/encryption-and-decryption-using-a-symmetric-key-in-c-sharp/
+- Javascript Closures
+	- https://stackoverflow.com/questions/21010963/how-to-get-outer-loop-index-inside-anonymous-function-call
+- ASP.NET App settings
+	- https://www.c-sharpcorner.com/article/reading-values-from-appsettings-json-in-asp-net-core/
+	- .\Controllers\UserController.cs Line 14-21
+- SQLite iterative parameter insertion
+	- https://stackoverflow.com/questions/2377506/pass-array-parameter-in-sqlcommand
+	- .\SQLite.cs Line 50-72
+- Css Additions (~\wwwroot]\css\site.css)
+	- https://codepen.io/jnbruno/pen/vNpPpW
