@@ -22,7 +22,7 @@
                 <th scope="col" class="col-2">#</th>
                 @for (int t = 0; t < Model.Teams.Length; t++)
                 {
-                    <th scope="col" class="col-3">
+                    <th scope="col" class="col-2">
                         @Model.Teams[t].Name
                         @if (Model.Completed && (Model.LeadingTeam ?? -1) == t)
                         {
