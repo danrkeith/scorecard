@@ -1,16 +1,22 @@
 ﻿# SCORECARD
 
-## Video Demo: <>
+## Video Demo
 
-## Description:
+<URL>
 
-## Example Account
+## Description
+
+TODO
+
+## Using Application
+
+#### Example Account Included
 
 Username: **cs50**
 
 Password: **harvard**
 
-## References:
+## References
 
 * DOTNET (ASP.NET, SQLite.Net)
 	* https://docs.microsoft.com/en-us/documentation/
