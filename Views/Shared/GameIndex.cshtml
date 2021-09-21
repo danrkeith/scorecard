@@ -14,8 +14,8 @@
         $("#teams").change(function () {
             $("#teamCount").val($(this).val());
 
-            for (let i = 1; i <= 3; i++) {
-                if (i > $(this).val()) {
+            for (let i = 0; i < @Model.TeamCount; i++) {
+                if (i > $(this).val() - 1) {
                     $(`.team${i}`).hide();
                 } else {
                     $(`.team${i}`).show();
@@ -29,8 +29,8 @@
         $("#players").change(function () {
             $("#playerCount").val($(this).val());
 
-            for (let i = 1; i <= 3; i++) {
-                if (i > $(this).val()) {
+            for (let i = 0; i < @Model.PlayerCount; i++) {
+                if (i > $(this).val() - 1) {
                     $(`#player${i}`).hide();
                 } else {
                     $(`#player${i}`).show();
@@ -39,6 +39,14 @@
 
             CheckValid();
         });
+
+        // Hide players aren't shown by default
+        for (let i = @(Model.TeamCount > Model.PlayerCount ? Model.TeamCount : Model.PlayerCount) - 1; i > 1; i--) {
+            $(`#player${i}, .team${i}`).hide();
+        }
+
+        // Select 2 players / 2 teams by default
+        $("#teams, #players").val(2);
     </script>
 }
 
@@ -51,43 +59,22 @@
     <!--Team 3 & Player 3 are disabled by default-->
     <div class="container">
         <div id="teamNames" class="row mb-1">
-            <div class="col team1">Team 1</div>
-            <div class="col team2">Team 2</div>
-            <div class="col team3" style="display: none">Team 3</div>
+            @for (int t = 0; t < Model.TeamCount; t++)
+            {
+                <div class="col team@(t)">Team 1</div>
+            }
         </div>
-        <div id="player1" class="row mb-1">
-            <div class="col team1">
-                <input asp-for="Names[0][0]" type="text" class="form-control" placeholder="Player 1" />
+        @for (int p = 0; p < Model.PlayerCount; p++)
+        {
+            <div id="player@(p)" class="row mb-1">
+                @for (int t = 0; t < Model.TeamCount; t++)
+                {
+                    <div class="col team@(t)">
+                        <input asp-for="Names[t][p]" type="text" class="form-control" placeholder="Player @(p+1)" />
+                    </div>
+                }
             </div>
-            <div class="col team2">
-                <input asp-for="Names[1][0]" type="text" class="form-control" placeholder="Player 1" />
-            </div>
-            <div class="col team3" style="display: none">
-                <input asp-for="Names[2][0]" type="text" class="form-control" placeholder="Player 1" />
-            </div>
-        </div>
-        <div id="player2" class="row mb-1">
-            <div class="col team1">
-                <input asp-for="Names[0][1]" type="text" class="form-control" placeholder="Player 2" />
-            </div>
-            <div class="col team2">
-                <input asp-for="Names[1][1]" type="text" class="form-control" placeholder="Player 2" />
-            </div>
-            <div class="col team3" style="display: none">
-                <input asp-for="Names[2][1]" type="text" class="form-control" placeholder="Player 2" />
-            </div>
-        </div>
-        <div id="player3" class="row mb-1" style="display: none">
-            <div class="col team1">
-                <input asp-for="Names[0][2]" type="text" class="form-control" placeholder="Player 3" />
-            </div>
-            <div class="col team2">
-                <input asp-for="Names[1][2]" type="text" class="form-control" placeholder="Player 3" />
-            </div>
-            <div class="col team3" style="display: none">
-                <input asp-for="Names[2][2]" type="text" class="form-control" placeholder="Player 3" />
-            </div>
-        </div>
+        }
     </div>
 
     <br />
@@ -101,17 +88,19 @@
                         <span class="input-group-text">Teams</span>
                     </div>
                     <select id="teams" class="custom-select">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
+                        @for (int t = 1; t <= Model.TeamCount; t++)
+                        {
+                            <option value="@(t)">@(t)</option>
+                        }
                     </select>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Players Per Team</span>
                     </div>
                     <select id="players" class="custom-select">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
+                        @for (int p = 1; p <= Model.PlayerCount; p++)
+                        {
+                            <option value="@(p)">@(p)</option>
+                        }
                     </select>
                 </div>
             </div>

@@ -110,10 +110,13 @@ namespace ScoreCardv2.Controllers
             return rounds;
         }
 
-        public IActionResult BaseIndex()
+        public IActionResult BaseIndex(int teamCount, int playerCount)
         {
             ViewData["Controller"] = _controller;
-            return View("/Views/Shared/GameIndex.cshtml");
+            return View("/Views/Shared/GameIndex.cshtml", new TeamsViewModel() {
+                TeamCount = teamCount,
+                PlayerCount = playerCount
+            });
         }
 
         public IActionResult BasePostIndex(TeamsViewModel model)

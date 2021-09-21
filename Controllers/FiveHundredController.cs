@@ -19,7 +19,7 @@ namespace ScoreCardv2.Controllers
 
         [Route("/FiveHundred/")]
         [HttpGet]
-        public IActionResult Index() => BaseIndex();
+        public IActionResult Index() => BaseIndex(3, 3);
 
         [Route("/FiveHundred/")]
         [HttpPost]

@@ -19,7 +19,7 @@ namespace ScoreCardv2.Controllers
 
         [Route("/BlankGame/")]
         [HttpGet]
-        public IActionResult Index() => BaseIndex();
+        public IActionResult Index() => BaseIndex(5, 5);
 
         [Route("/BlankGame/")]
         [HttpPost]
