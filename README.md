@@ -37,16 +37,18 @@
 
 ### Summary
 
-This website acts as a platform to keep score of card games. It is written to support the game '500', and also allows the user
-to simply add scores independant of any automated scoring in the form of a 'Blank Game'. If a user is logged in, they are also
-able to resume their last 500 game or blank game.
+This website acts as a platform to keep score of card games. It is written to support the game '500', and also allows the user to simply add scores independant of any automated
+scoring in the form of a 'Blank Game'. If a user is logged in, they are also able to resume their last 500 game or blank game.
+
+The file structure is in the MVC (Model, View, Controller) format. The model files contain classes in which information is passed between the controller & view. The view files
+contain the html files and layouts which are shown to the user and are generated client-side. The controller files run the server-side processing, such as data-accessing and
+computations.
 
 ### .\wwwroot
 
 - .\wwwroot\app_data\Data.db - A SQLite database file that contains all user and game data.
 - .\wwwroot\css\site.css - The stylesheet applied to all html pages.
-- .\wwwroot\js\site.js - Contains a script to ensure that all necessary elements of a form are appropriately filled before
-allowing a user to continue
+- .\wwwroot\js\site.js - Contains a script to ensure that all necessary elements of a form are appropriately filled before allowing a user to continue
 - .\wroot\lib - Contains files for the bootstrap and jquery libraries
 
 ## Example Account Included
