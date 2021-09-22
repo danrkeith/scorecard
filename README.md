@@ -43,7 +43,11 @@ able to resume their last 500 game or blank game.
 
 ### .\wwwroot
 
-#### .\wwwroot\app_data\Data.db
+- .\wwwroot\app_data\Data.db - A SQLite database file that contains all user and game data.
+- .\wwwroot\css\site.css - The stylesheet applied to all html pages.
+- .\wwwroot\js\site.js - Contains a script to ensure that all necessary elements of a form are appropriately filled before
+allowing a user to continue
+- .\wroot\lib - Contains files for the bootstrap and jquery libraries
 
 ## Example Account Included
 
