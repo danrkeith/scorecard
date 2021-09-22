@@ -35,7 +35,10 @@
 
 ## Description
 
-TODO
+### Summary
+
+This website acts as a platform to keep score of card games.
+It is written to support the game '500', and also allows the user to simply add scores independant of any automated scoring in the form of a 'Blank Game'.
 
 ## Example Account Included
 
