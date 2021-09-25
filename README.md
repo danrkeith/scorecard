@@ -10,24 +10,24 @@
 2. Run the project locally.
 	- For Windows:
 
-			cd .\bin\Release\netcoreapp3.1\publish
+			cd .\Publish
 			start .\ScoreCardv2-win-x64
 
 	- For MacOS:
 
-			cd .\bin\Release\netcoreapp3.1\publish
+			cd .\Publish
 			chmod +x .\ScoreCardv2-osx-x64
 			.\ScoreCardv2-osx-x64
 
 	- For 64-Bit Linux (e.g. Ubuntu):
 
-			cd .\bin\Release\netcoreapp3.1\publish
+			cd .\Publish
 			chmod +x .\ScoreCardv2-linux-x64
 			.\ScoreCardv2-linux-x64
 
 	- For 32-Bit ARM Linux (e.g. Raspbian)
 
-			cd .\bin\Release\netcoreapp3.1\publish
+			cd .\Publish
 			chmod +x .\ScoreCardv2-linux-arm
 			.\ScoreCardv2-linux-arm
 

@@ -13,4 +13,8 @@
     <None Include="wwwroot\app_data\Data.db" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Publish\" />
+  </ItemGroup>
+
 </Project>
