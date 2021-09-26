@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-<https://www.youtube.com/watch?v=EeGtnx1MVeg>
+https://www.youtube.com/watch?v=EeGtnx1MVeg
 
 ## Running the Application
 
